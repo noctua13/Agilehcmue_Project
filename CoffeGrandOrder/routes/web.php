@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\registerController;
+use App\Http\Controllers\testController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//--- Open Router register ---//
+Route::view('/register', 'register');
+Route::post('/register',[registerController::class, 'registerFunction']);
+
+//Route::get('/test', [testController::class, 'test']);
+//--- End Router register ---//
