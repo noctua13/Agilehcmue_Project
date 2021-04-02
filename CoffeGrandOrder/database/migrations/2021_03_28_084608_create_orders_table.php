@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
 			$table->integer('userid');
 			$table->integer('price');
 			$table->dateTime('orderdate');
+            $table->string('address');
 			$table->string('status');
             $table->timestamps();
         });
