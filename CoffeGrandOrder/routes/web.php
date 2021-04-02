@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\registerController;
+use App\Http\Controllers\testController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,3 +44,9 @@ Route::get('/dashboard.html', ["as" => "dashboard", 'uses' => function () {
 	return view('dashboard');
 }]);
 */
+//--- Open Router register ---//
+Route::view('/register', 'register');
+Route::post('/register',[registerController::class, 'registerFunction']);
+
+//Route::get('/test', [testController::class, 'test']);
+//--- End Router register ---//
