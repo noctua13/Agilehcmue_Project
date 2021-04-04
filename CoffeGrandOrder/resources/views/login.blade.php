@@ -72,6 +72,7 @@ button:hover {
   }
 }
 </style>
+<link href="{{ asset('/css/login.css') }}" rel="stylesheet">
 
 @endsection
 
@@ -84,8 +85,8 @@ button:hover {
 @endsection
 
 @section('content')
-
-<form method="POST" action="{{route('user-authenticate')}}">
+<a href="/" >Home Page</a>
+<!-- <form method="POST" action="{{route('user-authenticate')}}">
 	{{ csrf_field() }}
 	<div class="container">
 		<label for="username"><b>Username</b></label>
@@ -99,7 +100,26 @@ button:hover {
     </div>
 	
 	</div>
-</form>
+</form> -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <form class="box" method="POST" action="{{route('user-authenticate')}}" >
+                {{ csrf_field() }}
+                    <h1>Login</h1>
+                    <p class="text-muted"> Please enter your username and password!</p>
+                    <input type="text" placeholder="Enter Username..." name="username" required>
+                    <input type="password" placeholder="Enter Password..." name="password" required>
+                      <a class="forgot text-muted" href="#">Forgot password?</a>
+                     <input type="submit" name="" value="Login" href="#">
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 

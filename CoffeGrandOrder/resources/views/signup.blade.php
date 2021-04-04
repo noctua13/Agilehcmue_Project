@@ -71,6 +71,7 @@ button:hover {
   }
 }
 </style>
+<link href="{{ asset('/css/login.css') }}" rel="stylesheet">
 @endsection
 
 @section('meta-og-system')
@@ -82,35 +83,34 @@ button:hover {
 @endsection
 
 @section('content')
+<a href="/" >Home Page</a>
 
-<form method="POST" action="{{route('user-store')}}">
-	{{ csrf_field() }}
-	<div class="container">
-		<label for="username"><b>Username</b></label>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <form class="box" method="POST" action="{{route('user-store')}}">
+                {{ csrf_field() }}
+                    <h1>Register</h1>
+                    <div class="container">
+		
 		<input type="text" placeholder="Enter Username..." name="username" required>
-		
-		<label for="password"><b>Password</b></label>
 		<input type="password" placeholder="Enter Password..." name="password" required>
-		
-		<label for="name"><b>Name</b></label>
 		<input type="text" placeholder="Enter Your Name..." name="name" required>
-		
-		<label for="address"><b>Address</b></label>
 		<input type="text" placeholder="Enter Your Address..." name="address" required>
-		
-		<label for="phone"><b>Phone</b></label>
 		<input type="text" placeholder="Enter Your Phone Number..." name="phone" required>
-		
-		<label for="email"><b>Email</b></label>
 		<input type="text" placeholder="Enter Your Email..." name="email" required>
+
 		
-		<p>By creating an account you agree to TâmGankTeam's <a href="#">Terms & Privacy</a>.</p>
-		<div class="clearfix">
-		<button type="submit" class="signupbtn">Sign Up</button>
+		<input type="submit" value="Sign up" href="#">
+    
+                    
+                </form>
+            </div>
+        </div>
     </div>
-	
-	</div>
-</form>
+</div>
 
 @endsection
 

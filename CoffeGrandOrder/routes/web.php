@@ -15,11 +15,23 @@ use App\Http\Controllers\testController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('Homepage');
 });
 
 Route::get('/home.html', ["as" => "home", 'uses' => function () {	
 	return view('home');
+}]);
+
+Route::get('/contact.html', ["as" => "home", 'uses' => function () {	
+	return view('today-specital');
+}]);
+
+Route::get('/today-special.html', ["as" => "home", 'uses' => function () {	
+	return view('Contact');
+}]);
+
+Route::get('/menu.html', ["as" => "home", 'uses' => function () {	
+	return view('Menu');
 }]);
 
 Route::get('/login.html', ["as" => "login", 'uses' => function () {	
