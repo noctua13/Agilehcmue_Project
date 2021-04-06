@@ -12,7 +12,12 @@
 	<!-- REQUIRED CSS -->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap4.min.css">
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+	
 	@yield('page-css')
+	
+
+  
+  
 </head>
 <body>
 	<div class="wrapper">
@@ -23,6 +28,7 @@
 		<script src="js/jquery-2.2.3.js"></script>
 		<script src="js/bootstrap4.min.js"></script>
 		@yield('page-js')
+		
 	</div>
 </body>
 </html>

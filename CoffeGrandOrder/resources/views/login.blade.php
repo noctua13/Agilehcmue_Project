@@ -73,7 +73,10 @@ button:hover {
 }
 </style>
 <link href="{{ asset('/css/login.css') }}" rel="stylesheet">
-
+<link href="{{ asset('/css/templatemo-style.css') }}" rel="stylesheet">
+  <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
 @endsection
 
 @section('meta-og-system')
@@ -85,7 +88,7 @@ button:hover {
 @endsection
 
 @section('content')
-<a href="/" >Home Page</a>
+
 <!-- <form method="POST" action="{{route('user-authenticate')}}">
 	{{ csrf_field() }}
 	<div class="container">
@@ -105,7 +108,7 @@ button:hover {
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <div class="card">
+            <div >
                 <form class="box" method="POST" action="{{route('user-authenticate')}}" >
                 {{ csrf_field() }}
                     <h1>Login</h1>
@@ -114,8 +117,9 @@ button:hover {
                     <input type="password" placeholder="Enter Password..." name="password" required>
                       <a class="forgot text-muted" href="#">Forgot password?</a>
                      <input type="submit" name="" value="Login" href="#">
-                    
+                     <a class="forgot text-muted" href="{{route('signup')}}">I don't have account.</a>
                 </form>
+
             </div>
         </div>
     </div>
@@ -124,4 +128,8 @@ button:hover {
 @endsection
 
 @section('page-js')
+<script type="text/javascript" src="./js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
+   <script type="text/javascript" src="./js/templatemo-script.js"></script> 
+   <link href="{{ asset('js/templatemo-script.js') }}" rel="script">
+  <link href="{{ asset('js/jquery-1.11.2.min.js') }}" rel="script">
 @endsection

@@ -83,17 +83,17 @@ button:hover {
 @endsection
 
 @section('content')
-<a href="/" >Home Page</a>
+
 
 
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <div class="card">
+            <div >
                 <form class="box" method="POST" action="{{route('user-store')}}">
                 {{ csrf_field() }}
                     <h1>Register</h1>
-                    <div class="container">
+                    
 		
 		<input type="text" placeholder="Enter Username..." name="username" required>
 		<input type="password" placeholder="Enter Password..." name="password" required>
@@ -101,10 +101,10 @@ button:hover {
 		<input type="text" placeholder="Enter Your Address..." name="address" required>
 		<input type="text" placeholder="Enter Your Phone Number..." name="phone" required>
 		<input type="text" placeholder="Enter Your Email..." name="email" required>
-
-		
 		<input type="submit" value="Sign up" href="#">
+    <a class="forgot text-muted" href="{{route('login')}}">I Have a account.</a>
     
+   
                     
                 </form>
             </div>

@@ -14,23 +14,25 @@ use App\Http\Controllers\testController;
 |
 */
 
-Route::get('/', function () {
-    return view('Homepage');
-});
+
+
+Route::get('/', ["as" => "homepage", 'uses' => function () {	
+	return view('Homepage');
+}]);
 
 Route::get('/home.html', ["as" => "home", 'uses' => function () {	
 	return view('home');
 }]);
 
-Route::get('/contact.html', ["as" => "home", 'uses' => function () {	
-	return view('today-specital');
+Route::get('/contact.html', ["as" => "contact", 'uses' => function () {	
+	return view('contact');
 }]);
 
-Route::get('/today-special.html', ["as" => "home", 'uses' => function () {	
-	return view('Contact');
+Route::get('/today-special.html', ["as" => "today-special", 'uses' => function () {	
+	return view('today-special');
 }]);
 
-Route::get('/menu.html', ["as" => "home", 'uses' => function () {	
+Route::get('/menu.html', ["as" => "menu", 'uses' => function () {	
 	return view('Menu');
 }]);
 
