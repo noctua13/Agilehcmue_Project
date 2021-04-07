@@ -55,6 +55,7 @@ Route::get('/dashboard.html', function () {
 
 
 Route::get('/products.html', ["as" => "products", 'uses' => 'App\Http\Controllers\productControllers\ProductController@getProducts']);
+//Route::get('/Menu.html', ["as" => "products", 'uses' => 'App\Http\Controllers\productControllers\ProductController@getProducts']);
 Route::get('/product/{id}.html', ["as" => "product", 'uses' => 'App\Http\Controllers\productControllers\ProductController@viewProduct']);
 /*
 Route::get('/dashboard.html', ["as" => "dashboard", 'uses' => function () {	

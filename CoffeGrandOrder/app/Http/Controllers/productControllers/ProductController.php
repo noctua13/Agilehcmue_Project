@@ -71,9 +71,11 @@ class ProductController
 	// }
 	// //Show some latest products
 	public function getProducts() {
-		$products = Product::select('id', 'name', 'description', 'image', 'price','stock')->orderBy('created_at', 'desc')->take(10)->get();
-		return view('products', compact('products'));
+		$products = Product::select('id', 'name', 'description', 'image', 'price','stock','type')->orderBy('created_at', 'desc')->take(10)->get();
+		$types = Product::select('type')->orderBy('created_at', 'desc')->take(10)->distinct()->get();
+		return view('products', compact('products','types'));
 	}
+	
 	
 	//Show product base on slug
 	public function viewProduct($id) {
