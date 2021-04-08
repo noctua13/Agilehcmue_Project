@@ -16,34 +16,34 @@ use App\Http\Controllers\testController;
 
 
 
-Route::get('/', ["as" => "homepage", 'uses' => function () {	
+Route::get('/', ["as" => "homepage", 'uses' => function () {
 	return view('Homepage');
 }]);
 
-Route::get('/home.html', ["as" => "home", 'uses' => function () {	
+Route::get('/home.html', ["as" => "home", 'uses' => function () {
 	return view('home');
 }]);
 
-Route::get('/contact.html', ["as" => "contact", 'uses' => function () {	
+Route::get('/contact.html', ["as" => "contact", 'uses' => function () {
 	return view('contact');
 }]);
 
-Route::get('/today-special.html', ["as" => "today-special", 'uses' => function () {	
+Route::get('/today-special.html', ["as" => "today-special", 'uses' => function () {
 	return view('today-special');
 }]);
 
-Route::get('/menu.html', ["as" => "menu", 'uses' => function () {	
+Route::get('/menu.html', ["as" => "menu", 'uses' => function () {
 	return view('Menu');
 }]);
 
-Route::get('/login.html', ["as" => "login", 'uses' => function () {	
+Route::get('/login.html', ["as" => "login", 'uses' => function () {
 	return view('login');
 }]);
 Route::post('/login/authenticate', ["as" => "user-authenticate", 'uses' => 'App\Http\Controllers\UserController@login']);
 
 Route::get('/logout', ["as" => "logout", 'uses' => 'App\Http\Controllers\UserController@logout']);
 
-Route::get('/signup.html', ["as" => "signup", 'uses' => function () {	
+Route::get('/signup.html', ["as" => "signup", 'uses' => function () {
 	return view('signup');
 }]);
 
@@ -64,7 +64,18 @@ Route::get('/dashboard.html', ["as" => "dashboard", 'uses' => function () {
 */
 //--- Open Router register ---//
 Route::view('/register', 'register');
-Route::post('/register',[registerController::class, 'registerFunction']);
+Route::post('/register', [registerController::class, 'registerFunction']);
 
 //Route::get('/test', [testController::class, 'test']);
 //--- End Router register ---//
+
+
+// --- Open Admin Manage Product ---//
+Route::get('/productList.html', ["as" => "ProductList", 'uses' => function () {
+	return view('admin/ProductList');
+}]);
+
+Route::get('/editProduct.html', ["as" => "EditProduct", 'uses' => function () {
+	return view('admin/EditProduct');
+}]);
+//--- End Admin Manage Product ---//
