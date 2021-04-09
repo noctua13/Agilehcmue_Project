@@ -73,6 +73,15 @@ class ProductController
 		return view('products', compact('products','types'));
 	}
 	
+	public function deleteProduct($id){
+		$product = Product::find($id);
+		if ($product == null){
+			return redirect('/products.html')->with('error','Item deleted failed!');;
+		}
+		$product->delete();
+		//return redirect('/products.html');
+		return redirect('/products.html')->with('success','Item deleted successfully!');
+	}
 	
 	//Show product base on slug
 	public function viewProduct($id) {

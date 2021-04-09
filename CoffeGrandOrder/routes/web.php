@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\registerController;
 use App\Http\Controllers\testController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -75,3 +76,4 @@ Route::view('/register', 'register');
 Route::post('/register', [registerController::class, 'registerFunction']);
 //Route::get('/test', [testController::class, 'test']);
 
+Route::get('/product/{id}', [ProductController::class,'deleteProduct']);
