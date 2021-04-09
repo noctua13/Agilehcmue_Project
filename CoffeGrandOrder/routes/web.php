@@ -64,6 +64,12 @@ Route::get('/product-list.html', ["as" => "product-list", 'uses' => function () 
 	return view('admin/product-list');
 }]);
 
+Route::post('/product/create', ["as" => "product-create", 'uses' => 'App\Http\Controllers\ProductController@createProduct']);
+
+Route::post('/product/update/{id}', ["as" => "product-update", 'uses' => 'App\Http\Controllers\ProductController@updateProduct']);
+
+Route::post('/product/delete/{id}', ["as" => "product-delete", 'uses' => 'App\Http\Controllers\ProductController@deleteProduct']);
+
 Route::get('/editProduct.html', ["as" => "EditProduct", 'uses' => function () {
 	return view('admin/EditProduct');
 }]);
