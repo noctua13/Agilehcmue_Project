@@ -63,18 +63,19 @@
               @foreach($products as $product)
               
               <div class="tm-product">
-                <img src="product-images/{{$product->image}}" href="product/{{$product->id}}.html" alt="Product">
+                <img src="product-images/{{$product->image}}" href="product/{{$product->id}}.html" alt="Product" height=200 >
                 <div class="tm-product-text">
-                  <h3 class="tm-product-title" >{{$product->name}}</h3>
+                  <h3 class="tm-product-title" > <a href="product/{{$product->id}}.html">{{$product->name}}</a></h3>
                   <p class="tm-product-description">{!!$product->description!!}</p>
                 </div>
                 <div class="tm-product-price">
-                  <a href="product/{{$product->id}}.html" class="tm-product-price-link tm-handwriting-font"><span class="tm-product-price-currency"></span>{{$product->price}} $</a>
+                  <a href="product/{{$product->id}}.html" class="tm-product-price-link tm-handwriting-font"><span class="tm-product-price-currency"></span>${{$product->price}} </a>
                 </div>
               </div>
 
               @endforeach
-              <div class="tm-product">
+            <!--
+			  <div class="tm-product">
                 <img src="img/menu-1.jpg" alt="Product">
                 <div class="tm-product-text">
                   <h3 class="tm-product-title">Americano 1</h3>
@@ -84,7 +85,7 @@
                   <a href="#" class="tm-product-price-link tm-handwriting-font"><span class="tm-product-price-currency">$</span>30</a>
                 </div>
               </div>
-
+			-->
             </div>
           </div>          
         </section>
