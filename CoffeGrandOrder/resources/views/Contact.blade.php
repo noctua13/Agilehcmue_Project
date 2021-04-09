@@ -1,16 +1,10 @@
+@extends('layouts.main')
+@section('title', 'Coffee/Grand Order | Liên hệ')
 
-    @extends('layouts.main')
-@section('title', 'Coffe/Grand Order | Đăng ký')
-@section('page-css')
-<link href="{{ asset('/css/templatemo-style.css') }}" rel="stylesheet">
-  <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
-  <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
-@endsection
 
 @section('meta-og-system')
 <meta property="og:title" content="Tâm and the bois store" />
-<meta property="og:url" content="localhost/signup.html" />
+<meta property="og:url" content="localhost/contact.html" />
 <meta property="og:image" content="site-images/tamamoSad.png" />
 <meta property="og:description" content="Description" />
 <meta property="og:type" content="website" />
@@ -63,19 +57,10 @@
         </section>
       </div>
     </div> 
-    
-   <!-- JS -->
-
-
-
-
 @endsection
 
 @section('page-js')
-<link href="{{ asset('js/templatemo-script.js') }}" rel="script">
-  <link href="{{ asset('js/jquery-1.11.2.min.js') }}" rel="script">
-  <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
-   <script type="text/javascript" src="js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+   <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
    <script>
       /* Google map
       ------------------------------------------------*/

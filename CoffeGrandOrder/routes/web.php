@@ -14,13 +14,10 @@ use App\Http\Controllers\testController;
 |
 */
 
-
-
+//////////////////////////
+//  PUBLIC DIRECTORIES  //
+//////////////////////////
 Route::get('/', ["as" => "homepage", 'uses' => function () {
-	return view('Homepage');
-}]);
-
-Route::get('/home.html', ["as" => "home", 'uses' => function () {
 	return view('home');
 }]);
 
@@ -32,10 +29,13 @@ Route::get('/today-special.html', ["as" => "today-special", 'uses' => function (
 	return view('today-special');
 }]);
 
-Route::get('/menu.html', ["as" => "menu", 'uses' => function () {
-	return view('Menu');
-}]);
+Route::get('/products.html', ["as" => "products", 'uses' => 'App\Http\Controllers\ProductController@getProducts']);
 
+Route::get('/product/{id}.html', ["as" => "product", 'uses' => 'App\Http\Controllers\ProductController@viewProduct']);
+
+//////////////////////////
+//    AUTHENTICATION    //
+//////////////////////////
 Route::get('/login.html', ["as" => "login", 'uses' => function () {
 	return view('login');
 }]);
@@ -49,28 +49,17 @@ Route::get('/signup.html', ["as" => "signup", 'uses' => function () {
 
 Route::post('/signup/store', ["as" => "user-store", 'uses' => 'App\Http\Controllers\UserController@store']);
 
+///////////////////////////
+// REGISTERED USERS ONLY //
+///////////////////////////
 Route::get('/dashboard.html', function () {
 	return view('dashboard');
 })->middleware('auth');
 
+//////////////////////////
+// ADMINISTRATORS ONLY  //
+//////////////////////////
 
-Route::get('/products.html', ["as" => "products", 'uses' => 'App\Http\Controllers\productControllers\ProductController@getProducts']);
-//Route::get('/Menu.html', ["as" => "products", 'uses' => 'App\Http\Controllers\productControllers\ProductController@getProducts']);
-Route::get('/product/{id}.html', ["as" => "product", 'uses' => 'App\Http\Controllers\productControllers\ProductController@viewProduct']);
-/*
-Route::get('/dashboard.html', ["as" => "dashboard", 'uses' => function () {	
-	return view('dashboard');
-}]);
-*/
-//--- Open Router register ---//
-Route::view('/register', 'register');
-Route::post('/register', [registerController::class, 'registerFunction']);
-
-//Route::get('/test', [testController::class, 'test']);
-//--- End Router register ---//
-
-
-// --- Open Admin Manage Product ---//
 Route::get('/productList.html', ["as" => "ProductList", 'uses' => function () {
 	return view('admin/ProductList');
 }]);
@@ -78,4 +67,11 @@ Route::get('/productList.html', ["as" => "ProductList", 'uses' => function () {
 Route::get('/editProduct.html', ["as" => "EditProduct", 'uses' => function () {
 	return view('admin/EditProduct');
 }]);
-//--- End Admin Manage Product ---//
+
+//////////////////////////
+//    MISCELLANEOUS     //
+//////////////////////////
+Route::view('/register', 'register');
+Route::post('/register', [registerController::class, 'registerFunction']);
+//Route::get('/test', [testController::class, 'test']);
+

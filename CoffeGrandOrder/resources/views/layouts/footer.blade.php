@@ -1,4 +1,6 @@
-<!-- <div>
+<!-- Footer content
+
+<div>
       <div class="tm-black-bg">
         <div class="container">
           <div class="row margin-bottom-60">
@@ -36,4 +38,6 @@
            <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2084 Your Cafe House</p>
          </div>  
       </div>
-   </div> <!-- Footer content-->  
+</div> -
+
+->  

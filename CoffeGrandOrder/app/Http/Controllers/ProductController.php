@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\productControllers;
+namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// use App\Contact;
 use App\Product;
-// use App\Comment;
-// use App\User;
-// use App\Order;
-// use App\OrderProduct;
+
 // use Mail;
 // use Session;
 // use Twilio\Rest\Client;
