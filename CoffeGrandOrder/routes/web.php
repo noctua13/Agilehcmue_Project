@@ -60,8 +60,8 @@ Route::get('/dashboard.html', function () {
 // ADMINISTRATORS ONLY  //
 //////////////////////////
 
-Route::get('/productList.html', ["as" => "ProductList", 'uses' => function () {
-	return view('admin/ProductList');
+Route::get('/product-list.html', ["as" => "product-list", 'uses' => function () {
+	return view('admin/product-list');
 }]);
 
 Route::get('/editProduct.html', ["as" => "EditProduct", 'uses' => function () {
