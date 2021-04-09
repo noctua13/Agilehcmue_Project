@@ -74,7 +74,7 @@ class ProductController
 	}
 	
 	
-	//Show product base on slug
+	//Show product base on id
 	public function viewProduct($id) {
 	 	$product = Product::select('id', 'name', 'description', 'image', 'price','stock')->where('id', $id)->first();
 	// 	$popularProducts = Product::select('id', 'title', 'slug', 'price', 'image')->orderBy('price', 'desc')->where('slug', '<>', $slug)->take(4)->get();
@@ -297,6 +297,37 @@ class ProductController
 // 		})->get();
 // 		return view('middleware.thanh.order', compact('orderDetail', 'orderContentwithImages'));
 // 	}
+
+	public function createProduct(Request $request) 
+	{
+		$product= new Product();
+		$product->name = $request->name;
+		$product->description = $request->description;
+		$product->stock = $request->stock;
+		$product->image = $request->image;
+		$product->price = $request->price;
+		$product->type = $request->type;
+		$product->save();
+		return redirect('/product-list.html');
+	}
+
+	public function updateProduct($id) 
+	{
+		$product = Product::where('id', $id)->first();
+		$product->name = $request->name;
+		$product->description = $request->description;
+		$product->stock = $request->stock;
+		$product->image = $request->image;
+		$product->price = $request->price;
+		$product->type = $request->type;
+		$product->save();
+		return redirect('/product-list.html');
+	}
+	public function deleteProduct($id) 
+	{
+		$product = Product::where('id', $id)->delete();
+		return redirect('/product-list.html');
+	}
  }
 
 ?>
