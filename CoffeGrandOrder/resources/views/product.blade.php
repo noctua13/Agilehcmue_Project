@@ -71,6 +71,8 @@ button:hover {
   }
 }
 </style>
+<link href="{{ asset('/css/detailproduct.css') }}" rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 @endsection
 
 @section('meta-og-system')
@@ -82,10 +84,94 @@ button:hover {
 @endsection
 
 @section('content')
-{!!$product->description!!}
+	<div class="container">
+<div class="card">
+	<div class="row">
+		<aside class="col-sm-7 border-right">
+<article class="gallery-wrap"> 
+<div class="img-big-wrap">
+  <div> <a href="#"><img src="img/menu-1.jpg"></a></div>
+</div> <!-- slider-product.// -->
+<div class="img-small-wrap">
+  <div class="item-gallery"> <img src="img/menu-1.jpg"> </div>
+  <div class="item-gallery"> <img src="img/menu-2.jpg"> </div>
+  <div class="item-gallery"> <img src="img/menu-3.jpg"> </div>
+  <div class="item-gallery"> <img src="img/menu-4.jpg"> </div>
+</div> <!-- slider-nav.// -->
+</article> <!-- gallery-wrap .end// -->
+		</aside>
+
+		<aside class="col-sm-5">
+<article class="card-body p-5">
+	<h3 class="title mb-3">{!!$product->name!!}</h3>
+
+<p class="price-detail-wrap"> 
+	<span class="price h3 text-warning"> 
+		<span class="currency">US $</span><span class="num">{!!$product->price!!}</span>
+	</span> 
+
+</p> <!-- price-detail-wrap .// -->
+<dl class="item-property">
+  <dt>Description</dt>
+  <dd><p>{!!$product->description!!}</p></dd>
+</dl>
+<dl class="param param-feature">
+  <dt>Model</dt>
+  <dd>{!!$product->type!!}</dd>
+</dl>  <!-- item-property-hor .// -->
+
+<dl class="param param-feature">
+  <dt>Delivery</dt>
+  <dd>Russia, USA, and Europe</dd>
+</dl>  <!-- item-property-hor .// -->
+
+<hr>
+	<div class="row">
+		<div class="col-sm-5">
+			<dl class="param param-inline">
+			  <dt>Quantity: </dt>
+			  <dd>
+			  	<input type="number" style="width:50%" />
+			  </dd>
+			</dl>  <!-- item-property .// -->
+		</div> <!-- col.// -->
+		<div class="col-sm-7">
+			<dl class="param param-inline">
+				  <dt>Size: </dt>
+				  <dd>
+				  	<label class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+					  <span class="form-check-label">S</span>
+					</label>
+					<label class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+					  <span class="form-check-label">M</span>
+					</label>
+					<label class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+					  <span class="form-check-label">L</span>
+					</label>
+				  </dd>
+			</dl>  <!-- item-property .// -->
+		</div> <!-- col.// -->
+	</div> <!-- row.// -->
+	<hr>
+	<a href="#" class="btn btn-lg btn-primary text-uppercase"> Buy now </a>
+	<a href="#" class="btn btn-lg btn-success text-uppercase"> Add to cart </a>
+</article> <!-- card-body.// -->
+		</aside> <!-- col.// -->
+	</div> <!-- row.// -->
+</div> <!-- card.// -->
+
+
+</div>
+</div>
+<!--container.//-->
 
 
 @endsection
 
 @section('page-js')
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 @endsection
