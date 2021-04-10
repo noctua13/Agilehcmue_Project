@@ -67,11 +67,28 @@ class ProductController
 	// 	return redirect('contact.html');
 	// }
 	// //Show some latest products
-	public function getProducts() {
-		$products = Product::select('id', 'name', 'description', 'image', 'price','stock','type')->orderBy('created_at', 'desc')->take(10)->get();
-		$types = Product::select('type')->orderBy('created_at', 'desc')->take(10)->distinct()->get();
-		return view('products', compact('products','types'));
+	public function getProducts(Request $request) {
+		if ( isset($request->type)){
+			$products = Product::select('id', 'name', 'description', 'image', 'price','stock')->where('type', $request->type)->orderBy('created_at', 'desc')->take(10)->get();
+			$types = Product::select('type')->orderBy('created_at', 'desc')->take(10)->distinct()->get();
+			$gettype=$request->type;
+			return view('products', compact('products','types','gettype'));
+		}
+		else {
+			$products = Product::select('id', 'name', 'description', 'image', 'price','stock')->orderBy('created_at', 'desc')->take(10)->get();
+			$types = Product::select('type')->orderBy('created_at', 'desc')->take(10)->distinct()->get();
+			$gettype="";
+			return view('products', compact('products','types','gettype'));
+		}
+		
 	}
+
+	// public function getProductsWithType() {
+	// 	$products = Product::select('id', 'name', 'description', 'image', 'price','stock','type')->where('type', $type)->orderBy('created_at', 'desc')->take(10)->get();
+	// 	$types = Product::select('type')->orderBy('created_at', 'desc')->take(10)->distinct()->get();
+	// 	//$type = $type;
+	// 	return view('products', compact('products','types'));
+	// }
 	
 	
 	//Show product base on id

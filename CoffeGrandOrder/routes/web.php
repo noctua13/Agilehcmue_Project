@@ -29,6 +29,8 @@ Route::get('/today-special.html', ["as" => "today-special", 'uses' => function (
 	return view('today-special');
 }]);
 
+//Route::get('/products.html', ["as" => "products", 'uses' => 'App\Http\Controllers\ProductController@getProducts']);
+
 Route::get('/products.html', ["as" => "products", 'uses' => 'App\Http\Controllers\ProductController@getProducts']);
 
 Route::get('/product/{id}.html', ["as" => "product", 'uses' => 'App\Http\Controllers\ProductController@viewProduct']);
