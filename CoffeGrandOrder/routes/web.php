@@ -64,15 +64,16 @@ Route::get('/product-list.html', ["as" => "product-list", 'uses' => function () 
 	return view('admin/product-list');
 }]);
 
+Route::get('/product-create.html', ["as" => "product-create-ui", 'uses' => function () {
+	return view('admin/product-create');
+}]);
 Route::post('/product/create', ["as" => "product-create", 'uses' => 'App\Http\Controllers\ProductController@createProduct']);
 
-Route::post('/product/update/{id}', ["as" => "product-update", 'uses' => 'App\Http\Controllers\ProductController@updateProduct']);
+Route::get('/product-edit/{id}.html', ["as" => "product-edit-ui", 'uses' => 'App\Http\Controllers\ProductController@getProductAdmin']);
+Route::post('/product/update', ["as" => "product-update", 'uses' => 'App\Http\Controllers\ProductController@updateProduct']);
 
-Route::get('/product/delete/{id}', ["as" => "product-delete", 'uses' => 'App\Http\Controllers\ProductController@deleteProduct']);
+Route::get('/product/delete', ["as" => "product-delete", 'uses' => 'App\Http\Controllers\ProductController@deleteProduct']);
 
-Route::get('/editProduct.html', ["as" => "EditProduct", 'uses' => function () {
-	return view('admin/EditProduct');
-}]);
 
 //////////////////////////
 //    MISCELLANEOUS     //

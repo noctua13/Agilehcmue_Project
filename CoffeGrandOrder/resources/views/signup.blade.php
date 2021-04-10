@@ -102,7 +102,7 @@ button:hover {
 		<input type="text" placeholder="Enter Your Phone Number..." name="phone" required>
 		<input type="text" placeholder="Enter Your Email..." name="email" required>
 		<input type="submit" value="Sign up" href="#">
-    <a class="forgot text-muted" href="{{route('login')}}">I Have a account.</a>
+    <a class="forgot text-muted" href="{{route('login')}}">I Have an account.</a>
     
    
                     
