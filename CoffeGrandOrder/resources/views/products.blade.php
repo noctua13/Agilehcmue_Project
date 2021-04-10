@@ -49,9 +49,10 @@
               <div class="tm-position-relative margin-bottom-30">              
                 <nav class="tm-side-menu">
                   <ul>
-                    <li><a href="#" class="active">All</a></li>
-                    @foreach($types as $product)
-                        <li><a href="{{route('products')}}">{{$product->type}}</a></li>
+                    <li ><a id="all" href="/products.html">All</a></li>
+                    @foreach($types as $protype)
+
+                        <li ><a id="{{$protype->type}}" href="/products.html?type={{$protype->type}}">{{$protype->type}}</a></li>
                     @endforeach
                   </ul>              
                 </nav>    
@@ -63,13 +64,15 @@
               @foreach($products as $product)
               
               <div class="tm-product">
-                <img src="product-images/{{$product->image}}" href="product/{{$product->id}}.html" alt="Product" height=200 >
+                <img src="{{$product->image}}" href="product/{{$product->id}}.html" alt="Product" height=200 >
                 <div class="tm-product-text">
                   <h3 class="tm-product-title" > <a href="product/{{$product->id}}.html">{{$product->name}}</a></h3>
                   <p class="tm-product-description">{!!$product->description!!}</p>
                 </div>
                 <div class="tm-product-price">
-                  <a href="product/{{$product->id}}.html" class="tm-product-price-link tm-handwriting-font"><span class="tm-product-price-currency"></span>${{$product->price}} </a>
+                  <a href="product/{{$product->id}}.html" class="tm-product-price-link tm-handwriting-font" style="line-height: 1;padding-top: 15px;"><span class="tm-product-price-currency"></span>{{$product->price}} <p class="tm-handwriting-font" style="
+    font-size: 30px;
+">VND</p> </a>
                 </div>
               </div>
 
@@ -104,4 +107,20 @@
   <link href="{{ asset('js/jquery-1.11.2.min.js') }}" rel="script">
   <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
    <script type="text/javascript" src="js/templatemo-script.js"></script> 
+   <script type="text/javascript">
+   
+    $(document).ready(function(){
+
+    if (window.location.href=="http://127.0.0.1:8000/products.html") {
+      $('#all').attr('class','active');
+    }
+    else {
+    var get = "<?php Print($gettype); ?>";
+    var x = document.getElementById(get);
+    x.classList.add("active");
+    //$(get).attr('class','active');
+    }
+})
+    
+   </script>
 @endsection

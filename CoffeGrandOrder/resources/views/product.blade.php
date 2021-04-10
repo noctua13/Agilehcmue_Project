@@ -90,13 +90,13 @@ button:hover {
 		<aside class="col-sm-7 border-right">
 <article class="gallery-wrap"> 
 <div class="img-big-wrap">
-  <div> <a href="#"><img src="img/menu-1.jpg"></a></div>
+  <div> <a href="#"><img src="{!!$product->image!!}"></a></div>
 </div> <!-- slider-product.// -->
 <div class="img-small-wrap">
-  <div class="item-gallery"> <img src="img/menu-1.jpg"> </div>
-  <div class="item-gallery"> <img src="img/menu-2.jpg"> </div>
-  <div class="item-gallery"> <img src="img/menu-3.jpg"> </div>
-  <div class="item-gallery"> <img src="img/menu-4.jpg"> </div>
+  <div class="item-gallery"> <img src="{!!$product->image!!}"> </div>
+  <div class="item-gallery"> <img src="{!!$product->image!!}"> </div>
+  <div class="item-gallery"> <img src="{!!$product->image!!}"> </div>
+  <div class="item-gallery"> <img src="{!!$product->image!!}"> </div>
 </div> <!-- slider-nav.// -->
 </article> <!-- gallery-wrap .end// -->
 		</aside>
@@ -107,7 +107,7 @@ button:hover {
 
 <p class="price-detail-wrap"> 
 	<span class="price h3 text-warning"> 
-		<span class="currency">US $</span><span class="num">{!!$product->price!!}</span>
+		<span class="currency">Price: </span><span class="num">{!!$product->price!!} VND</span>
 	</span> 
 
 </p> <!-- price-detail-wrap .// -->
@@ -116,22 +116,22 @@ button:hover {
   <dd><p>{!!$product->description!!}</p></dd>
 </dl>
 <dl class="param param-feature">
-  <dt>Model</dt>
+  <dt>Drink</dt>
   <dd>{!!$product->type!!}</dd>
 </dl>  <!-- item-property-hor .// -->
 
-<dl class="param param-feature">
+<!--<dl class="param param-feature">
   <dt>Delivery</dt>
   <dd>Russia, USA, and Europe</dd>
-</dl>  <!-- item-property-hor .// -->
-
+</dl>   item-property-hor .//
+ -->
 <hr>
 	<div class="row">
 		<div class="col-sm-5">
 			<dl class="param param-inline">
 			  <dt>Quantity: </dt>
 			  <dd>
-			  	<input type="number" style="width:50%" />
+			  	<input type="number" min="1" style="width:50%; text-align: center;" value="1" />
 			  </dd>
 			</dl>  <!-- item-property .// -->
 		</div> <!-- col.// -->
