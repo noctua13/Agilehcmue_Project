@@ -300,6 +300,11 @@ class ProductController
 // 		return view('middleware.thanh.order', compact('orderDetail', 'orderContentwithImages'));
 // 	}
 
+	public function viewProductAdmin($id) {
+	 	$product = Product::where('id', $id)->first();
+	 	return view('admin.product-view', compact('product' ));
+	}
+	
 	public function createProduct(Request $request) 
 	{
 		$file = $request->imagetoupload;

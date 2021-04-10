@@ -64,6 +64,8 @@ Route::get('/product-list.html', ["as" => "product-list", 'uses' => function () 
 	return view('admin/product-list');
 }]);
 
+Route::get('/product-view/{id}.html', ["as" => "product-view", 'uses' => 'App\Http\Controllers\ProductController@viewProductAdmin']);
+
 Route::get('/product-create.html', ["as" => "product-create-ui", 'uses' => function () {
 	return view('admin/product-create');
 }]);

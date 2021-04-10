@@ -86,7 +86,7 @@
 				<tr>
                     <th scope="row">{{ $product->id }}</th>
 					<td><img src="product-images/{{$product->image}}" height=150 /></td>
-                    <td>{{ $product->name }}</td>
+                    <td><a href="/product-view/{{ $product->id }}.html">{{ $product->name }}</a></td>
 					<td>{{ $product->type }}</td>
                     <td>
 					@if ($product->stock == 1)
