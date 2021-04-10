@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File; 
 use App\Product;
 
 // use Mail;
@@ -317,32 +319,60 @@ class ProductController
 
 	public function createProduct(Request $request) 
 	{
+		$file = $request->imagetoupload;
+		$filename = $file->getClientOriginalName();
+		$file->move(public_path() . '/product-images/' , $filename);
+		
 		$product= new Product();
 		$product->name = $request->name;
 		$product->description = $request->description;
 		$product->stock = $request->stock;
-		$product->image = $request->image;
+		$product->image = $filename;
 		$product->price = $request->price;
 		$product->type = $request->type;
 		$product->save();
 		return redirect('/product-list.html');
 	}
 
-	public function updateProduct($id) 
+	public function getProductAdmin($id) {
+	 	$product = Product::where('id', $id)->first();
+	 	return view('admin.product-edit', compact('product' ));
+	}
+
+	public function updateProduct(Request $request) 
 	{
-		$product = Product::where('id', $id)->first();
+		$product = Product::where('id', $request->id)->first();
 		$product->name = $request->name;
 		$product->description = $request->description;
 		$product->stock = $request->stock;
-		$product->image = $request->image;
+		
+		if ($request->hasFile('imagetoupload')) {
+			//remove old image
+			$image_path = public_path("product-images/{$product->image}");
+			if (File::exists($image_path)) {
+				File::delete($image_path);
+			}
+			//replace with new image
+			$file = $request->imagetoupload;
+			$filename = $file->getClientOriginalName();
+			$file->move(public_path() . '/product-images/' , $filename);
+			//replace with new image name
+			$product->image = $filename;
+		}
+		
 		$product->price = $request->price;
 		$product->type = $request->type;
 		$product->save();
 		return redirect('/product-list.html');
 	}
-	public function deleteProduct($id) 
+	public function deleteProduct(Request $request) 
 	{
-		$product = Product::where('id', $id)->delete();
+		$product = Product::where('id', $request->id)->first();
+		$image_path = public_path("product-images/{$product->image}");
+		if (File::exists($image_path)) {
+			File::delete($image_path);
+		}
+		$product->delete();
 		return redirect('/product-list.html');
 	}
  }

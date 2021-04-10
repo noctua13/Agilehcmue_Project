@@ -63,7 +63,7 @@
             </button>
             <!-- Add product -->
         </form>
-		<a href=""> <i class="far fa-plus-square add-product"></i> Add Product... </a>
+		<a href="product-create.html"> <i class="far fa-plus-square add-product"></i> Add Product... </a>
     </div>
     <div class="product-list">
         <table class="table">
@@ -99,9 +99,12 @@
                     <td>${{number_format($product->price)}}</td>
                     <td>
                         <!-- Edit product -->
-                        <a href="{{route('EditProduct')}}"><i class="far fa-edit action-icon"></i></a>
+                        <a href="/product-edit/{{$product->id}}.html"><button>Edit</button></a>
                         <!-- Remove product -->
-                        <a href=""><i class="far fa-trash-alt action-icon"></i></a>
+                        <form action="{{route('product-delete')}}" method="get" >
+							<input type="hidden" name="id" value="{{$product->id}}" />
+							<button type="submit">Delete</button>
+						</form>
                     </td>
                 </tr>
 				@endforeach
