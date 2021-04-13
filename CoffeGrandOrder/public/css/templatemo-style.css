@@ -579,8 +579,8 @@ ol li:before {
 }
 .tm-product-text { max-width: 325px; }
 .tm-product-price {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   background-color: rgb(82, 76, 76);
   border-radius: 50%;
   display: -webkit-box;
@@ -611,8 +611,8 @@ ol li:before {
 .tm-product-price-link {
   border: 2px solid rgb(174,174,174);
   border-radius: 50%;
-  width: 85px;
-  height: 85px;
+  width: 105px;
+  height: 105px;
   -webkit-transition: all 0.3s ease;
           transition: all 0.3s ease;
   text-align: center;

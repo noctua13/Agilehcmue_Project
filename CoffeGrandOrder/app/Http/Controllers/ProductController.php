@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File; 
 use App\Product;
 
 // use Mail;
@@ -67,11 +69,28 @@ class ProductController
 	// 	return redirect('contact.html');
 	// }
 	// //Show some latest products
-	public function getProducts() {
-		$products = Product::select('id', 'name', 'description', 'image', 'price','stock','type')->orderBy('created_at', 'desc')->take(10)->get();
-		$types = Product::select('type')->orderBy('created_at', 'desc')->take(10)->distinct()->get();
-		return view('products', compact('products','types'));
+	public function getProducts(Request $request) {
+		if ( isset($request->type)){
+			$products = Product::select('id', 'name', 'description', 'image', 'price','stock')->where('type', $request->type)->orderBy('created_at', 'desc')->take(10)->get();
+			$types = Product::select('type')->orderBy('created_at', 'desc')->take(10)->distinct()->get();
+			$gettype=$request->type;
+			return view('products', compact('products','types','gettype'));
+		}
+		else {
+			$products = Product::select('id', 'name', 'description', 'image', 'price','stock')->orderBy('created_at', 'desc')->take(10)->get();
+			$types = Product::select('type')->orderBy('created_at', 'desc')->take(10)->distinct()->get();
+			$gettype="";
+			return view('products', compact('products','types','gettype'));
+		}
+		
 	}
+
+	// public function getProductsWithType() {
+	// 	$products = Product::select('id', 'name', 'description', 'image', 'price','stock','type')->where('type', $type)->orderBy('created_at', 'desc')->take(10)->get();
+	// 	$types = Product::select('type')->orderBy('created_at', 'desc')->take(10)->distinct()->get();
+	// 	//$type = $type;
+	// 	return view('products', compact('products','types'));
+	// }
 	
 	public function deleteProduct($id){
 		$product = Product::find($id);
@@ -83,7 +102,7 @@ class ProductController
 		return redirect('/products.html')->with('success','Item deleted successfully!');
 	}
 	
-	//Show product base on slug
+	//Show product base on id
 	public function viewProduct($id) {
 	 	$product = Product::select('id', 'name', 'description', 'image', 'price','stock')->where('id', $id)->first();
 	// 	$popularProducts = Product::select('id', 'title', 'slug', 'price', 'image')->orderBy('price', 'desc')->where('slug', '<>', $slug)->take(4)->get();
@@ -306,6 +325,70 @@ class ProductController
 // 		})->get();
 // 		return view('middleware.thanh.order', compact('orderDetail', 'orderContentwithImages'));
 // 	}
+
+	public function viewProductAdmin($id) {
+	 	$product = Product::where('id', $id)->first();
+	 	return view('admin.product-view', compact('product' ));
+	}
+	
+	public function createProduct(Request $request) 
+	{
+		$file = $request->imagetoupload;
+		$filename = $file->getClientOriginalName();
+		$file->move(public_path() . '/product-images/' , $filename);
+		
+		$product= new Product();
+		$product->name = $request->name;
+		$product->description = $request->description;
+		$product->stock = $request->stock;
+		$product->image = $filename;
+		$product->price = $request->price;
+		$product->type = $request->type;
+		$product->save();
+		return redirect('/product-list.html');
+	}
+
+	public function getProductAdmin($id) {
+	 	$product = Product::where('id', $id)->first();
+	 	return view('admin.product-edit', compact('product' ));
+	}
+
+	public function updateProduct(Request $request) 
+	{
+		$product = Product::where('id', $request->id)->first();
+		$product->name = $request->name;
+		$product->description = $request->description;
+		$product->stock = $request->stock;
+		
+		if ($request->hasFile('imagetoupload')) {
+			//remove old image
+			$image_path = public_path("product-images/{$product->image}");
+			if (File::exists($image_path)) {
+				File::delete($image_path);
+			}
+			//replace with new image
+			$file = $request->imagetoupload;
+			$filename = $file->getClientOriginalName();
+			$file->move(public_path() . '/product-images/' , $filename);
+			//replace with new image name
+			$product->image = $filename;
+		}
+		
+		$product->price = $request->price;
+		$product->type = $request->type;
+		$product->save();
+		return redirect('/product-list.html');
+	}
+	public function deleteProduct(Request $request) 
+	{
+		$product = Product::where('id', $request->id)->first();
+		$image_path = public_path("product-images/{$product->image}");
+		if (File::exists($image_path)) {
+			File::delete($image_path);
+		}
+		$product->delete();
+		return redirect('/product-list.html');
+	}
  }
 
 ?>
