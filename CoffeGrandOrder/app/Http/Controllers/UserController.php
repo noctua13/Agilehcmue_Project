@@ -76,7 +76,8 @@ class UserController extends Controller
 		$user->isverified = false;
 		$user->permission = 0;
 		$user->save();
-		return redirect('/home.html');
+        $request->session()->put('success-register','Register Successfully!');
+		return redirect('/home');
     }
 
     /**

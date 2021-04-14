@@ -1,3 +1,10 @@
+@if(Session::has('success-register'))
+<div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  <strong>Success!!</strong> Your Accout has been registed!
+</div>
+  {{Session::forget('success-register')}}
+@endif
 @extends('layouts.main')
 @section('title', 'Coffee/Grand Order | Trang Chủ')
 @section('page-css')
@@ -5,6 +12,28 @@
   <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet">
   <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
   <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
+  <style>
+    .alert {
+      padding: 20px;
+      background-color: #f44336;
+      color: white;
+    }
+    
+    .closebtn {
+      margin-left: 15px;
+      color: white;
+      font-weight: bold;
+      float: right;
+      font-size: 22px;
+      line-height: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    
+    .closebtn:hover {
+      color: black;
+    }
+    </style>
 @endsection
 
 @section('meta-og-system')

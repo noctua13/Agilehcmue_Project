@@ -21,6 +21,9 @@ use App\Http\Controllers\ProductController;
 Route::get('/', ["as" => "homepage", 'uses' => function () {
 	return view('home');
 }]);
+Route::get('/home', ["as" => "homepage", 'uses' => function () {
+	return view('home');
+}]);
 
 Route::get('/contact.html', ["as" => "contact", 'uses' => function () {
 	return view('contact');
@@ -83,8 +86,8 @@ Route::get('/product/delete', ["as" => "product-delete", 'uses' => 'App\Http\Con
 //////////////////////////
 //    MISCELLANEOUS     //
 //////////////////////////
-Route::view('/register', 'register');
-Route::post('/register', [registerController::class, 'registerFunction']);
+//Route::view('/register', 'register');
+//Route::post('/register', [registerController::class, 'registerFunction']);
 //Route::get('/test', [testController::class, 'test']);
 
-Route::get('/product/{id}', [ProductController::class,'deleteProduct']);
+//Route::get('/product/{id}', [ProductController::class,'deleteProduct']);
