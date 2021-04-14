@@ -64,7 +64,7 @@
               @foreach($products as $product)
               
               <div class="tm-product">
-                <img src="{{$product->image}}" href="product/{{$product->id}}.html" alt="Product" height=200 >
+                <img src="product-images/{{$product->image}}" alt="Product" height=200 >
                 <div class="tm-product-text">
                   <h3 class="tm-product-title" > <a href="product/{{$product->id}}.html">{{$product->name}}</a></h3>
                   <p class="tm-product-description">{!!$product->description!!}</p>

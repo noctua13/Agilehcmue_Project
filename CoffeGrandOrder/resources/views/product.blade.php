@@ -90,13 +90,13 @@ button:hover {
 		<aside class="col-sm-7 border-right">
 <article class="gallery-wrap"> 
 <div class="img-big-wrap">
-  <div> <a href="#"><img src="{!!$product->image!!}"></a></div>
+  <div> <a href="#"><img src="product-images/{!!$product->image!!}"></a></div>
 </div> <!-- slider-product.// -->
 <div class="img-small-wrap">
-  <div class="item-gallery"> <img src="{!!$product->image!!}"> </div>
-  <div class="item-gallery"> <img src="{!!$product->image!!}"> </div>
-  <div class="item-gallery"> <img src="{!!$product->image!!}"> </div>
-  <div class="item-gallery"> <img src="{!!$product->image!!}"> </div>
+  <div class="item-gallery"> <img src="product-images/{!!$product->image!!}"> </div>
+  <div class="item-gallery"> <img src="product-images/{!!$product->image!!}"> </div>
+  <div class="item-gallery"> <img src="product-images/{!!$product->image!!}"> </div>
+  <div class="item-gallery"> <img src="product-images/{!!$product->image!!}"> </div>
 </div> <!-- slider-nav.// -->
 </article> <!-- gallery-wrap .end// -->
 		</aside>
