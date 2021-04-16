@@ -95,13 +95,35 @@ button:hover {
                     <h1>Register</h1>
                     
 		
-		<input type="text" placeholder="Enter Username..." name="username" required>
-		<input type="password" placeholder="Enter Password..." name="password" required>
-		<input type="text" placeholder="Enter Your Name..." name="name" required>
-		<input type="text" placeholder="Enter Your Address..." name="address" required>
-		<input type="text" placeholder="Enter Your Phone Number..." name="phone" required>
-		<input type="text" placeholder="Enter Your Email..." name="email" required>
-		<input type="submit" value="Sign up" href="#">
+      <input type="text" placeholder="Enter Username..." name="username" required>
+      @error('username')
+      <span style="color:red">{{$message}}</span><br>
+      @enderror
+      
+      <input type="password" placeholder="Enter Password..." name="password" required>
+      @error('password')
+      <span style="color:red">{{$message}}</span><br>
+      @enderror
+      
+      <input type="text" placeholder="Enter Your Name..." name="name" required>
+      @error('name')
+      <span style="color:red">{{$message}}</span><br>
+      @enderror
+      
+      <input type="text" placeholder="Enter Your Address..." name="address" required>
+      
+      
+      <input type="text" placeholder="Enter Your Phone Number..." name="phone" required>
+      @error('phone')
+      <span style="color:red">{{$message}}</span><br>
+      @enderror
+      
+      <input type="text" placeholder="Enter Your Email..." name="email" required>
+      @error('email')
+      <span style="color:red">{{$message}}</span><br>
+      @enderror
+      
+      <input type="submit" value="Sign up" href="#">
     <a class="forgot text-muted" href="{{route('login')}}">I Have an account.</a>
     
    
@@ -116,3 +138,9 @@ button:hover {
 
 @section('page-js')
 @endsection
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+
+  </script>

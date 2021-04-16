@@ -66,18 +66,27 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {        
-		$user= new User();
-		$user->username = $request['username'];
-		$user->password = Hash::make($request['password']);
-		$user->name = $request['name'];
-		$user->address = $request['address'];
-		$user->phone = $request['phone'];
-		$user->email = $request['email'];
-		$user->isverified = false;
-		$user->permission = 0;
-		$user->save();
-        $request->session()->put('success-register','Register Successfully!');
-		return redirect('/home');
+      $user= new User();
+
+        $request->validate([
+            'username'=>'required|unique:users|min:4',
+            'password'=>'required',
+            'email'=>'required|unique:users',
+            'phone'=>'required|min:10',
+            'name'=>'required|min:3'
+        ]);
+
+      $user->username = $request['username'];
+      $user->password = Hash::make($request['password']);
+      $user->name = $request['name'];
+      $user->address = $request['address'];
+      $user->phone = $request['phone'];
+      $user->email = $request['email'];
+      $user->isverified = false;
+      $user->permission = 0;
+      $user->save();
+          $request->session()->put('success-register','Register Successfully!');
+      return redirect('/home');
     }
 
     /**
@@ -118,5 +127,12 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->first();
 		return view('admin.user-view', compact('user'));
+    }
+
+    public function checkUser(Request $req){
+      $username = $req['username'];
+      $user = User::where('username', $username)->first();
+      if ($user == null) return response()->json(['success'=>'fail']);
+      return response()->json(['success'=>'success']);
     }
 }
