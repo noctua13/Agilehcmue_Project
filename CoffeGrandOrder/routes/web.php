@@ -33,11 +33,19 @@ Route::get('/today-special.html', ["as" => "today-special", 'uses' => function (
 	return view('today-special');
 }]);
 
-//Route::get('/products.html', ["as" => "products", 'uses' => 'App\Http\Controllers\ProductController@getProducts']);
-
 Route::get('/products.html', ["as" => "products", 'uses' => 'App\Http\Controllers\ProductController@getProducts']);
 
 Route::get('/product/{id}.html', ["as" => "product", 'uses' => 'App\Http\Controllers\ProductController@viewProduct']);
+
+//////////////////////////
+//         CART         //
+//////////////////////////
+
+Route::get('/cart.html', ["as" => "cart", 'uses' => 'App\Http\Controllers\ProductController@displayCart']);
+Route::get('/cart/insert', ["as" => "cart-insert", 'uses' => 'App\Http\Controllers\ProductController@insertCart']);
+Route::get('/cart/update', ["as" => "cart-update", 'uses' => 'App\Http\Controllers\ProductController@updateCart']);
+Route::get('/cart/delete', ["as" => "cart-delete", 'uses' => 'App\Http\Controllers\ProductController@deleteCart']);
+Route::get('/cart/destroy', ["as" => "cart-destroy", 'uses' => 'App\Http\Controllers\ProductController@destroyCart']);
 
 //////////////////////////
 //    AUTHENTICATION    //
@@ -66,6 +74,8 @@ Route::get('/dashboard.html', function () {
 // ADMINISTRATORS ONLY  //
 //////////////////////////
 
+/* PRODUCT MANAGEMENT */
+
 Route::get('/product-list.html', ["as" => "product-list", 'uses' => function () {
 	return view('admin/product-list');
 }]);
@@ -82,6 +92,16 @@ Route::post('/product/update', ["as" => "product-update", 'uses' => 'App\Http\Co
 
 Route::get('/product/delete', ["as" => "product-delete", 'uses' => 'App\Http\Controllers\ProductController@deleteProduct']);
 
+/* USER MANAGEMENT */
+
+Route::get('/user-list.html', ["as" => "user-list", 'uses' => function () {
+	return view('admin/user-list');
+}]);
+
+Route::get('/user/{id}.html', ["as" => "user-view", 'uses' => 'App\Http\Controllers\UserController@view']);
+
+Route::get('/user/promote/{id}', ["as" => "user-promote", 'uses' => 'App\Http\Controllers\UserController@promote']);
+Route::get('/user/demote/{id}', ["as" => "product-demote", 'uses' => 'App\Http\Controllers\UserController@demote']);
 
 //////////////////////////
 //    MISCELLANEOUS     //

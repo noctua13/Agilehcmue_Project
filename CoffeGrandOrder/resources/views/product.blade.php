@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Coffe/Grand Order | Đăng ký')
+@section('title', 'Coffe/Grand Order | Sản phẩm')
 @section('page-css')
 <style>
 /* Source: https://www.w3schools.com/howto/howto_css_signup_form.asp */
@@ -107,7 +107,7 @@ button:hover {
 
 <p class="price-detail-wrap"> 
 	<span class="price h3 text-warning"> 
-		<span class="currency">Price: </span><span class="num">{!!$product->price!!} VND</span>
+		<span class="currency">Price: </span><span class="num">$ {!!$product->price!!}</span>
 	</span> 
 
 </p> <!-- price-detail-wrap .// -->
@@ -117,7 +117,7 @@ button:hover {
 </dl>
 <dl class="param param-feature">
   <dt>Drink</dt>
-  <dd>{!!$product->type!!}</dd>
+  <dd>{{$product->type}}</dd>
 </dl>  <!-- item-property-hor .// -->
 
 <!--<dl class="param param-feature">
@@ -125,13 +125,15 @@ button:hover {
   <dd>Russia, USA, and Europe</dd>
 </dl>   item-property-hor .//
  -->
+<form action="/cart/insert" method="get">
+<input type="hidden" name="id" value="{{$product->id}}" />
 <hr>
 	<div class="row">
 		<div class="col-sm-5">
 			<dl class="param param-inline">
 			  <dt>Quantity: </dt>
 			  <dd>
-			  	<input type="number" min="1" style="width:50%; text-align: center;" value="1" />
+			  	<input type="number" min="1" style="width:50%; text-align: center;" name="quantity" value="1" />
 			  </dd>
 			</dl>  <!-- item-property .// -->
 		</div> <!-- col.// -->
@@ -140,24 +142,42 @@ button:hover {
 				  <dt>Size: </dt>
 				  <dd>
 				  	<label class="form-check form-check-inline">
-					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-					  <span class="form-check-label">S</span>
+					  <input class="form-check-input" type="radio" name="size" id="inlineRadio2" value="1">
+					  <span class="form-check-label">Sm</span>
 					</label>
 					<label class="form-check form-check-inline">
-					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+					  <input class="form-check-input" type="radio" name="size" id="inlineRadio2" value="2"checked>
 					  <span class="form-check-label">M</span>
 					</label>
 					<label class="form-check form-check-inline">
-					  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+					  <input class="form-check-input" type="radio" name="size" id="inlineRadio2" value="3">
 					  <span class="form-check-label">L</span>
 					</label>
 				  </dd>
 			</dl>  <!-- item-property .// -->
+			<dl class="param param-inline">
+				  <dt>Customizable: </dt>
+				  <dd>
+				  	<label class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="customizable" id="inlineRadio2" value="1" checked>
+					  <span class="form-check-label">Default</span>
+					</label>
+					<label class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="customizable" id="inlineRadio2" value="2">
+					  <span class="form-check-label">Sweetness</span>
+					</label>
+					<label class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="customizable" id="inlineRadio2" value="3">
+					  <span class="form-check-label">Milk</span>
+					</label>
+				  </dd>
+			</dl>
 		</div> <!-- col.// -->
 	</div> <!-- row.// -->
 	<hr>
-	<a href="#" class="btn btn-lg btn-primary text-uppercase"> Buy now </a>
-	<a href="#" class="btn btn-lg btn-success text-uppercase"> Add to cart </a>
+	<button class="btn btn-lg btn-primary text-uppercase"> Buy now </button>
+	<button class="btn btn-lg btn-success text-uppercase"> Add to cart </button>
+</form>
 </article> <!-- card-body.// -->
 		</aside> <!-- col.// -->
 	</div> <!-- row.// -->

@@ -28,4 +28,8 @@ class Administrator
 	{
 		return ($this->permission == 1) ? true : false;
 	}
+	public function isIdIdentical($id) 
+	{
+		return ($this->id == $id) ? true : false;
+	}
 }

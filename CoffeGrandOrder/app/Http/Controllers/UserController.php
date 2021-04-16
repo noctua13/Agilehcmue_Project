@@ -81,47 +81,42 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Account promotion
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function promote($id)
     {
-        //
+        $user = User::where('id', $id)->first();
+		$user->permission = 1;
+		$user->save();
+		return redirect('/user-list.html');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Account demotion
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function demote($id)
     {
-        //
+        $user = User::where('id', $id)->first();
+		$user->permission = 0;
+		$user->save();
+		return redirect('/user-list.html');
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
+	
+	/**
+     * Getting account's information
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function view($id)
     {
-        //
+        $user = User::where('id', $id)->first();
+		return view('admin.user-view', compact('user'));
     }
 }

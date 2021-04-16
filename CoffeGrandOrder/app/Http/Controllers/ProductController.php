@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\File;
 use App\Product;
 
 // use Mail;
-// use Session;
+use Session;
 // use Twilio\Rest\Client;
 
 class ProductController
@@ -122,104 +122,115 @@ class ProductController
 	// 	return back();
 	// }
 	
-	// public function insertCart(Request $request) {
-	// 	//get id and quantity sent from form
-	// 	$id = $request->id;
-	// 	$quantity = $request->quantity;
-	// 	//initialize list of products in cart
-	// 	$productList = array();
-	// 	//get product detail from id
-	// 	$productDetail = Product::where('id', $id)->first();
+	public function insertCart(Request $request) {
+	//get id and quantity sent from form
+	$id = $request->id;
+	$quantity = $request->quantity;
+	$size = $request->size;
+	$customizable = $request->customizable;
+	
+	//initialize list of products in cart
+	$productList = array();
+	
+	//get product detail from id
+	$productDetail = Product::where('id', $id)->first();
 
-	// 	//if cart exists, add item into cart
-	// 	if (Session::has('myCart')) 
-	// 	{			
-	// 		//store current cart into productList
-	// 		$productList = Session::get('myCart');
-	// 		//check if product already in cart
-	// 		$isProductExist = false;
-	// 		foreach($productList as &$product) 
-	// 		{
-	// 			if ($product['id'] == $id) 
-	// 			{
-	// 				$product['quantity'] = $product['quantity'] + $quantity;
-	// 				$isProductExist = true;
-	// 				break;
-	// 			}
-	// 		}
-	// 		if (!$isProductExist) 
-	// 		{
-	// 		//if the product is not in the cart yet
-	// 		//push new product into the cart
-	// 		array_push($productList, array('id' => $id, 'title' => $productDetail->title, 'price' => $productDetail->price, 'description' => $productDetail->description, 'image' => $productDetail->image, 'quantity' => $quantity));
-	// 		}
-	// 	}
-	// 	//if cart does not exist, create one and put this product in
-	// 	else 
-	// 	{
-	// 		array_push($productList, array('id' => $id, 'title' => $productDetail->title, 'price' => $productDetail->price, 'image' => $productDetail->image, 'description' => $productDetail->description, 'quantity' => $quantity));
-	// 	}
-	// 	//replace current session with new cart
-	// 	Session::forget('myCart');
-	// 	Session::put('myCart', $productList);
-	// 	return redirect()->route("thanh-products");
-		
-	// }
+	//if cart exists, add item into cart
+	if (Session::has('Cart')) 
+	{			
+		//store current cart into productList
+		$productList = Session::get('Cart');
+		//check if product already in cart
+		$isProductExist = false;
+		foreach($productList as &$product) 
+		{
+			if ($product['id'] == $id && $product['size'] == $size && $product['customizable'] == $customizable) 
+			{
+				$product['quantity'] = $product['quantity'] + $quantity;
+				$isProductExist = true;
+				break;
+			}
+		}
+		if (!$isProductExist) 
+		{
+		//if the product is not in the cart yet
+		//push new product into the cart
+		array_push($productList, array('id' => $id, 'name' => $productDetail->name, 'price' => $productDetail->price, 'size' => $size, 'customizable' => $customizable, 'quantity' => $quantity, 'image' => $productDetail->image));
+		}
+	}
+	//if cart does not exist, create one and put this product in
+	else 
+	{
+		array_push($productList, array('id' => $id, 'name' => $productDetail->name, 'price' => $productDetail->price, 'size' => $size, 'customizable' => $customizable, 'quantity' => $quantity, 'image' => $productDetail->image));
+	}
+	//replace current session with new cart
+	Session::forget('Cart');
+	Session::put('Cart', $productList);
+	return redirect()->route("products");
+	}
 	
-	// public function deleteCart(Request $request) {
-	// 	$id = $request->id;
-	// 	$productList = Session::get('myCart');
+	public function deleteCart(Request $request) {
+		$id = $request->id;
+		$size = $request->size;
+		$customizable = $request->customizable;
 		
-	// 	foreach($productList as $item => $value) 
-	// 	{
-	// 		if ($value['id'] == $id) 
-	// 		{
-	// 			unset($productList[$item]);
-	// 			break;
-	// 		}
-	// 	}
-	// 	Session::forget('myCart');
-	// 	Session::put('myCart', $productList);
-	// 	return redirect()->route("thanh-cart");
-	// }
-	
-	// public function displayCart() {
-	// 	$sum = 0;
-	// 	if (Session::has('myCart')) 
-	// 	{
-	// 		$myCart = Session::get('myCart');
-	// 		foreach($myCart as $item)
-	// 		{
-	// 			$rs= $item['price'];
-	// 			$sum += $item['quantity'] * $rs;
-	// 		}
-	// 	}
-	// 	return view('site.cart', compact('sum'));
-	// }
-	
-	// public function updateCart(Request $request) {
-	// 	$id = $request->id;
-	// 	$quantity = $request->quantity;
-	// 	$productList = Session::get('myCart');
+		$productList = Session::get('Cart');
 		
-	// 	foreach($productList as $item => &$value) 
-	// 	{
-	// 		if ($value['id'] == $id) 
-	// 		{
-	// 			$value['quantity'] = $quantity;
-	// 			break;
-	// 		}
-	// 	}
-		
-	// 	Session::forget('myCart');
-	// 	Session::put('myCart', $productList);
-	// 	return redirect()->route("thanh-cart");
-	// }
+		foreach($productList as $item => $value) 
+		{
+			if ($value['id'] == $id && $value['size'] == $size && $value['customizable'] == $customizable) 
+			{
+				unset($productList[$item]);
+				break;
+			}
+		}
+		Session::forget('Cart');
+		Session::put('Cart', $productList);
+		return redirect()->route("cart");
+	}
 	
-	// public function destroyCart() {
-	// 	if (Session::has('myCart')) Session::forget('myCart');
-	// 	return redirect()->route("thanh-cart");
-	// }
+	public function displayCart() 
+	{
+		$sum = 0;
+		if (Session::has('Cart')) 
+		{
+			$myCart = Session::get('Cart');
+			foreach($myCart as $item)
+			{
+				$indivCost = $item['price'];
+				$sum += $item['quantity'] * $indivCost;
+			}
+		}
+		return view('cart', compact('sum'));
+	}
+	//Only update individual product
+	public function updateCart(Request $request) {
+		$id = $request->id;
+		$size = $request->size;
+		$customizable = $request->customizable;
+		$quantity = $request->quantity;
+		$productList = Session::get('Cart');
+		
+		foreach($productList as $item => &$value) 
+		{
+			if ($value['id'] == $id && $value['size'] == $size && $value['customizable'] == $customizable) 
+			{
+				$value['quantity'] = $quantity;
+				break;
+			}
+		}
+		
+		Session::forget('Cart');
+		Session::put('Cart', $productList);
+		return redirect()->route("cart");
+	}
+	
+	public function destroyCart() 
+	{
+		if (Session::has('Cart')) Session::forget('Cart');
+		return redirect()->route("cart");
+	}
+	
 	// //chau's; submit an order into the database
 	// public function postOrder(Request $request){
 		
