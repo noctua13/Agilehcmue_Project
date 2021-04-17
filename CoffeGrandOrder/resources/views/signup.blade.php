@@ -23,7 +23,9 @@ hr {
   border: 1px solid #f1f1f1;
   margin-bottom: 25px;
 }
-
+.error{
+  color:red;
+}
 /* Set a style for all buttons */
 button {
   background-color: #4CAF50;
@@ -90,7 +92,7 @@ button:hover {
     <div class="row">
         <div class="col-md-6">
             <div >
-                <form class="box" method="POST" action="{{route('user-store')}}">
+                <form id="registerBox" class="box" method="POST" action="{{route('user-store')}}">
                 {{ csrf_field() }}
                     <h1>Register</h1>
                     
@@ -137,10 +139,36 @@ button:hover {
 @endsection
 
 @section('page-js')
-@endsection
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 <script type="text/javascript">
-
-  </script>
+    $(function() {
+        $("#registerBox").validate({
+            rules: {
+                username: { required: true, minlength: 4},
+                password: { required: true, minlength: 4},
+                email: {
+                    required: true,
+                    email: true
+                },
+                name: {required: true, minlength: 3},
+                phone: {required: true, digits: true}
+            },
+            message:{
+                username: {required: "Put your username/ID", minlength: "Your username/ID too short"},
+                password: {required: "Put your password", minlength: "Your password too short"},
+                email: {required: "Put your email", email: "This is not email"},
+                name: {required: "Put your name", minlength: "Your name too short"},
+                phone: {required: "Put your phonenumber pls", digits: "Only Digits chars"}
+            },
+            errorLabelContainer: "#myError",
+            wrapper: "p",
+            submitHandler: function (form) {
+            if (confirm("Submit?    ")) {
+                form.submit();
+                }
+            }
+        });
+    });
+</script>
+@endsection
