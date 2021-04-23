@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File; 
 use App\Product;
+use App\Order;
+use App\Ordercontent;
 
 // use Mail;
 use Session;
@@ -232,31 +234,46 @@ class ProductController
 	}
 	
 	// //chau's; submit an order into the database
-	// public function postOrder(Request $request){
+	public function postOrder(Request $request)
+	{
+	 	$order = new Order();
+	 	if (Auth::check()) 
+		{
+			$order->userid = Auth::user()->id;
+		}
+		$order->name = $request->name;
+	 	$order->email = $request->email;
+	 	$order->phone = $request->phone;
+	 	$order->status = "pending";
+	 	$order->address = $request->address;
+		$order->deliverytype = $request->delivery;
+		$sum = 0;
+
+		$myCart = Session::get('Cart');
+		foreach($myCart as $item)
+		{
+			$indivCost = $item['price'];
+			$sum += $item['quantity'] * $indivCost;
+		}
+	 	$order->price = $sum;
 		
-	// 	$order = new Order();
-	// 	$order->delivery_name = $request->name;
-	// 	$order->delivery_email = $request->email;
-	// 	$order->delivery_phone = $request->phone_number;
-	// 	$order->verified = "false";
-	// 	$order->delivery_address = $request->address;
-	// 	$order->delivery_province = $request->city;
-	// 	$order->delivery_district = $request->district;
-	// 	$order->promotion = $request->discode;
-	// 	$order->total = $request->totalprice;
-	// 	$order->note = $request->note;
-	// 	$order->save();
-	// 	$productList = Session::get('myCart');
-	// 	foreach ($productList as $key => $value) 
-	// 	{
-	// 		$proorderProduct = new OrderProduct();
-	// 		$proorderProduct->order_id = $order->id;
-	// 		$proorderProduct->product_id = $value['id'];
-	// 		$proorderProduct->quantity = $value['quantity'];
-	// 		$proorderProduct->price = $value['price'];
-	// 		$proorderProduct->total = $value['quantity'] * $value['price'];
-	// 		$proorderProduct->save();
-	// 	}
+		$date = date_create();
+
+		$order->orderdate = $date;
+	 	$order->save();
+	 	$productList = Session::get('Cart');
+	 	foreach ($productList as $key => $value) 
+	 	{
+	 		$proorderProduct = new Ordercontent();
+	 		$proorderProduct->orderid = $order->id;
+	 		$proorderProduct->productid = $value['id'];
+	 		$proorderProduct->quantity = $value['quantity'];
+	 		$proorderProduct->price = $value['price'];
+			$proorderProduct->size = $value['size'];
+			$proorderProduct->customizable = $value['customizable'];
+	 		$proorderProduct->save();
+		}
+	}
 
 
 	// 	$data = $request->validate([

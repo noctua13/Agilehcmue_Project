@@ -36,9 +36,18 @@
 				@endif
 			</td>
 			<td><img src="product-images/{{$item['image']}}" height=200 /></td>
-			<td>{{$item['quantity']}}</td>
+			<td>
+				<form action="/cart/update" method="get">
+					<input type="hidden" name="id" value="{{$item['id']}}" />
+					<input type="hidden" name="size" value="{{$item['size']}}" />
+					<input type="hidden" name="customizable" value="{{$item['customizable']}}" />
+					<input type="number" name="quantity" min="1" value="{{$item['quantity']}}" style="width:50px;">
+					<button> Update </button>
+				</form>
+			
+			</td>
 			<td>{{$item['price']}}</td>
-			<td>Delete from Cart
+			<td>
 				<form action="/cart/delete" method="get">
 					<input type="hidden" name="id" value="{{$item['id']}}" />
 					<input type="hidden" name="size" value="{{$item['size']}}" />
@@ -50,7 +59,9 @@
 		@endforeach
 	</table>
 	
-	<p> <a href="/cart/destroy"> Destroy Cart</a> </p>
+	<p> <a href="/cart/destroy"> Destroy Cart </a> </p>
+	
+	<p> <a href="/checkout.html"> Proceed to Checkout </a> </p>
 	
 @endif
 

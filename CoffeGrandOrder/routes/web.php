@@ -64,6 +64,14 @@ Route::get('/signup.html', ["as" => "signup", 'uses' => function () {
 Route::post('/signup/store', ["as" => "user-store", 'uses' => 'App\Http\Controllers\UserController@store']);
 
 ///////////////////////////
+//       CHECKOUT        //
+///////////////////////////
+Route::get('/checkout.html', ["as" => "checkout", 'uses' => function () {
+	return view('checkout');
+}]);
+Route::post('/checkout/create', ["as" => "checkout-create", 'uses' => 'App\Http\Controllers\ProductController@postOrder']);
+
+///////////////////////////
 // REGISTERED USERS ONLY //
 ///////////////////////////
 Route::get('/dashboard.html', function () {
@@ -102,6 +110,10 @@ Route::get('/user/{id}.html', ["as" => "user-view", 'uses' => 'App\Http\Controll
 
 Route::get('/user/promote/{id}', ["as" => "user-promote", 'uses' => 'App\Http\Controllers\UserController@promote']);
 Route::get('/user/demote/{id}', ["as" => "product-demote", 'uses' => 'App\Http\Controllers\UserController@demote']);
+
+/* ORDER MANAGEMENT - to be implemented */
+
+/* DISCOUNT MANAGEMENT - to be implemented */
 
 //////////////////////////
 //    MISCELLANEOUS     //

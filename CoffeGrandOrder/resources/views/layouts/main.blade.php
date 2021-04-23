@@ -42,7 +42,7 @@
 		-->
 		<script src="js/bootstrap4.min.js"></script>
 		<script type="text/javascript" src="js/templatemo-script.js"></script> 
-		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		@yield('page-js')
 		
 	</div>
