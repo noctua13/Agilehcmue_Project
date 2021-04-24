@@ -18,7 +18,7 @@
         }
 
         .search-form {
-            margin: 50px 0 0 205px;
+            margin: 50px 205px 0 205px;
         }
 
         .add-product {
@@ -56,13 +56,63 @@
         </div>
     </div>
     <div class="search-form">
-        <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-            <button class="btn btn-outline-success btn-info my-2 my-sm-0" type="submit">
-                Search...
-            </button>
-            <!-- Add product -->
-        </form>
+        <div class="row">
+            <div class="col-sm-4">
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                    <button class="btn btn-outline-success btn-info my-2 my-sm-0" type="submit">
+                        Search...
+                    </button>
+                    <!-- Add product -->
+                </form>
+            </div>
+            <div class="col-sm-4">
+                <input style="width: 15%" id="getdate" value="0" min="0" max="31" type="number" required>
+                <input style="width: 15%" id="getmonth" value="0" min="0" max="12" type="number" required>
+                <input style="width: 30%" id="getyear" value="2010" min="2010" max="2090" type="number" required>
+                <button type="submit" onclick="getData()">Get data</button>
+            </div>
+            @if (Request::url() ==="http://127.0.0.1:8000/order-history-this-year.html")
+                <div class="col-sm-4">
+                    <form style="right: 20px;position: absolute;">
+                        <label >Order of:</label>
+                        <select name="time" id="time" onchange="timechange()">
+                            <option value="alltimes">All times</option>
+                            <option value="today">Today</option>
+                            <option value="thismonth">This Month</option>
+                            <option value="thisyear" selected>This Year</option>
+                        </select>
+                    </form>
+                </div>
+            @endif 
+            @if (Request::url() ==="http://127.0.0.1:8000/order-history-this-month.html")
+                <div class="col-sm-4">
+                    <form style="right: 20px;position: absolute;">
+                        <label >Order of:</label>
+                        <select name="time" id="time" onchange="timechange()">
+                            <option value="alltimes">All times</option>
+                            <option value="today">Today</option>
+                            <option value="thismonth" selected>This Month</option>
+                            <option value="thisyear" >This Year</option>
+                        </select>
+                    </form>
+                </div>
+            @endif 
+            @if (Request::url() ==="http://127.0.0.1:8000/order-history-today.html")
+                <div class="col-sm-4">
+                    <form style="right: 20px;position: absolute;">
+                        <label >Order of:</label>
+                        <select name="time" id="time" onchange="timechange()">
+                            <option value="alltimes">All times</option>
+                            <option value="today" selected>Today</option>
+                            <option value="thismonth" >This Month</option>
+                            <option value="thisyear" >This Year</option>
+                        </select>
+                    </form>
+                </div>
+            @endif 
+            
+        </div>
     </div>
     <div class="product-list">
         <table class="table">
@@ -113,12 +163,13 @@
 								<option value="shipping" {{$order->status=="shipping" ? "selected" : ""}}> Shipping </option>
 								<option value="delivered" {{$order->status=="delivered" ? "selected" : ""}}> Delivered </option>
 							</select>
-							<button type="submit">Update</button>
+							
 						</form>
 						@endif
 					</td>
                     <td>
-						<a href="/order/{{$order->id}}.html"><button>View</button></a>
+						<a href="/order/{{$order->id}}.html"><button style="width: 100%; margin: 5px;">View</button></a>
+                        <button style="width: 100%; margin: 5px;" type="submit">Update</button>
 					</td>
                 </tr>
 				@endforeach
@@ -145,3 +196,40 @@
         </ul>
     </nav>
 @endsection
+@section('page-js')
+
+   <script type="text/javascript">
+   
+    function timechange() {
+        var x = document.getElementById("time").value;
+        if (x=='alltimes'){
+            window.location.href= "http://127.0.0.1:8000/order-history.html";
+        }
+        else if (x=='today'){
+            window.location.href= "http://127.0.0.1:8000/order-history-today.html";
+        }
+        else if (x=='thismonth'){
+            window.location.href= "http://127.0.0.1:8000/order-history-this-month.html";
+        }
+        else if(x=='thisyear'){
+            window.location.href= "http://127.0.0.1:8000/order-history-this-year.html";
+        }
+    }
+    function getData(){
+        var d=document.getElementById("getdate").value;
+        var m=document.getElementById("getmonth").value;
+        var y=document.getElementById("getyear").value;
+        if(d==""){
+            d=0
+        }
+        if(m==""){
+            m=0
+        }
+        if(y==""){
+            y=0
+        }
+        window.location.href= "http://127.0.0.1:8000/order-history-by-date/time="+d+"-"+m+"-"+y+".html" ;
+    }
+   </script>
+@endsection
+

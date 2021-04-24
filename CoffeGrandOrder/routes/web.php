@@ -115,7 +115,16 @@ Route::get('/user/demote/{id}', ["as" => "product-demote", 'uses' => 'App\Http\C
 Route::get('/order-history.html', ["as" => "order-history", 'uses' => function () {
 	return view('admin/order-history');
 }]);
+
+Route::get('/order-history-today.html', ["as" => "order-history", 'uses' => 'App\Http\Controllers\ProductController@viewOrderHistoryToday']);
+
+Route::get('/order-history-this-month.html', ["as" => "order-history", 'uses' => 'App\Http\Controllers\ProductController@viewOrderHistoryThisMonth']);
+
+Route::get('/order-history-this-year.html', ["as" => "order-history",'uses' => 'App\Http\Controllers\ProductController@viewOrderHistoryThisYear']);
+
 Route::get('/order-history/{id}.html', ["as" => "order-history-by-id", 'uses' => 'App\Http\Controllers\ProductController@viewOrderHistoryByID']);
+
+Route::get('/order-history-by-date/time={time}.html', ["as" => "order-history", 'uses' => 'App\Http\Controllers\ProductController@viewOrderHistoryByDate']);
 
 Route::get('/order/{id}.html', ["as" => "order-view", 'uses' => 'App\Http\Controllers\ProductController@viewOrder']);
 Route::get('/order/update/status', ["as" => "order-update-status", 'uses' => 'App\Http\Controllers\ProductController@updateOrderStatus']);

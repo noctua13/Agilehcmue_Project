@@ -430,6 +430,63 @@ class ProductController
 		$orders = Order::where('userid', $id)->get();
 		return view('admin.order-history-by-id', compact('orders'));
 	}
+
+	public function viewOrderHistoryToday() 
+	{
+		$orders = Order::whereDay('updated_at', '=', date('d'))->whereMonth('updated_at', '=', date('m'))->whereYear('updated_at', '=', date('Y'))->where('status','delivered')->get();
+		return view('admin.order-history-by-id', compact('orders'));
+	}
+
+	public function viewOrderHistoryThisMonth() 
+	{
+		$orders = Order::whereMonth('updated_at', '=', date('m'))->whereYear('updated_at', '=', date('Y'))->where('status','delivered')->get();
+		return view('admin.order-history-by-id', compact('orders'));
+	}
+	public function viewOrderHistoryThisYear() 
+	{
+		$orders = Order::whereYear('updated_at', '=', date('Y'))->where('status','delivered')->get();
+		return view('admin.order-history-by-id', compact('orders'));
+	}
+
+	public function viewOrderHistoryByDate($date) 
+	{
+		$tm =explode("-", $date);
+		$day = $tm[0];
+		$month = $tm[1];
+		$year = $tm[2];
+
+		if($year==0) {
+			if ($month==0){
+				if($day == 0){
+					$orders = Order::where('status','delivered')->get();
+				}
+				else{
+					$orders = Order::whereDay('updated_at', '=',$day)->where('status','delivered')->get();
+				}
+			}
+			else if ($day==0){
+				$orders = Order::whereMonth('updated_at', '=', $month)->where('status','delivered')->get();
+			}
+			else {
+				$orders = Order::whereDay('updated_at', '=',$day)->whereMonth('updated_at', '=', $month)->where('status','delivered')->get();
+			}		
+		}
+		else if ($month==0){
+			if($day == 0){
+					$orders = Order::where('status','delivered')->whereYear('updated_at', '=', $year)->get();
+				}
+				else{
+					$orders = Order::whereDay('updated_at', '=',$day)->where('status','delivered')->whereYear('updated_at', '=', $year)->get();
+				}
+		}
+		else if ($day==0){
+			$orders = Order::whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->where('status','delivered')->get();
+		}
+		else{
+			$orders = Order::whereDay('updated_at', '=',$day)->whereMonth('updated_at', '=', $month)->whereYear('updated_at', '=', $year)->where('status','delivered')->get();
+		}
+		return view('admin.order-history-by-id', compact('orders'));
+	}
  }
 
 ?>

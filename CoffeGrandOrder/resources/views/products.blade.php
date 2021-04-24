@@ -120,7 +120,7 @@
     x.classList.add("active");
     //$(get).attr('class','active');
     }
-})
+  })
     
    </script>
 @endsection
