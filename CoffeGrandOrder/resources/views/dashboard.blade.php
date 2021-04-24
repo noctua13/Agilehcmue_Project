@@ -39,7 +39,12 @@ $address = Auth::user()->address;
                       
 <div class="col-sm-9 r-layout-user">
         <div>
-            <span class="text-lg text-bold pull-right"><a class="btn btn-info" href="/#"><i class="fa fa-eye"></i> View order history</a></span>
+            <span class="text-lg text-bold pull-right"><a class="btn btn-info" href="/order-history/{{Auth::user()->id}}.html"><i class="fa fa-eye"></i> View Order History</a></span>
+			@if (Auth::user()->permission == 1)
+			<span class="text-lg text-bold pull-right"><a class="btn btn-success" href="/product-list.html"><i class="fa fa-eye"></i> Product Management</a></span>
+			<span class="text-lg text-bold pull-right"><a class="btn btn-primary" href="/order-history.html"><i class="fa fa-eye"></i> Order Management</a></span>		
+			<span class="text-lg text-bold pull-right"><a class="btn btn-danger" href="/user-list.html"><i class="fa fa-eye"></i> User Management</a></span>
+			@endif
         </div>
         <div>
             <table class="table table-striped">

@@ -409,6 +409,27 @@ class ProductController
 		$product->delete();
 		return redirect('/product-list.html');
 	}
+	////////////////////////////////////
+	//   IN THE WRONG CONTROLLER ATM  //
+	////////////////////////////////////
+	public function updateOrderStatus(Request $request)
+	{
+		$order = Order::where('id', $request->id)->first();
+		$order->status = $request->status;
+		$order->save();
+		return back();
+	}
+	public function viewOrder($id) 
+	{
+		$orderdetail = Order::where('id', $id)->first();
+		$ordercontents = Ordercontent::where('orderid', $id)->get();
+		return view('admin.order-view', compact('orderdetail','ordercontents'));
+	}
+	public function viewOrderHistoryByID($id) 
+	{
+		$orders = Order::where('userid', $id)->get();
+		return view('admin.order-history-by-id', compact('orders'));
+	}
  }
 
 ?>

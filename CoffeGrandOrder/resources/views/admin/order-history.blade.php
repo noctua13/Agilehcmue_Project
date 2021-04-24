@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Coffee/Grand Order | Quản lý người dùng')
+@section('title', 'Coffee/Grand Order | Quản lý đơn hàng')
 
 @section('page-css')
     <script src="https://kit.fontawesome.com/d87577f1bf.js" crossorigin="anonymous"></script>
@@ -45,7 +45,7 @@
                     <div class="tm-logo-container">
                         <img src="img/logo.png" alt="Logo" class="tm-site-logo" />
                         <h1 class="tm-site-name tm-handwriting-font">
-                            User Management
+                            Order Management
                         </h1>
                     </div>
                     <div class="mobile-menu-icon">
@@ -69,57 +69,60 @@
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Id</th>
-                    <th scope="col">Username</th>
-					<th scope="col">Name</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Email</th>
 					<th scope="col">Phone</th>
-                    <th scope="col">Verified</th>
-					<th scope="col">Permissions</th>
+					<th scope="col">Delivery Address</th>
+                    <th scope="col">Price</th>
+					<th scope="col">Order Date</th>
+					<th scope="col">Status</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @php
-					$users = App\User::get();
+					$orders = App\Order::get();
 				@endphp
-				@foreach($users as $user)
+				@foreach($orders as $order)
 				<tr>
-                    <th scope="row">{{ $user->id }}</th>
-                    <td><a href="user/{{$user->id}}.html">{{ $user->username }}</a></td>
-					<td>{{ $user->name }}</td>
-					<td>{{ $user->email }}</td>
-					<td>{{ $user->phone }}</td>
+                    <th scope="row">{{ $order->id }}</th>
                     <td>
-					@if ($user->isverified == 1)
-						Yes
-					@else
-						No
-					@endif
-					
-					</td>
-					<td>
-					@if ($user->permission == 1)
-						Administrator
-					@else
-						Customer
-					@endif
-					
-					</td>
-                    <td>
-                        <!-- Promote/Demote -->
-						@if ($user->permission == 0)
-						<form action="user/promote/{{$user->id}}" method="get" >
-							<button type="submit">Promote</button>
-						</form>
+						@if ($order->userid != null)
+						<a href="user/{{$order->userid}}.html">{{ $order->name }}</a>
 						@else
-						<form action="user/demote/{{$user->id}}" method="get" >
-							<button type="submit">Demote</button>
+						{{$order->name}}
+						@endif
+					</td>
+					<td>{{ $order->email }}</td>
+					<td>{{ $order->phone }}</td>
+					<td>
+						@if ($order->deliverytype == 0)
+							At the store
+						@else
+						{{$order->address}}
+						@endif
+					</td>
+                    <td>$ {{$order->price}}</td>
+					<td>{{$order->orderdate}}</td>
+					<td>
+						@if ($order->status == 'cancelled')
+							Cancelled
+						@else
+						<form method="get" action="/order/update/status">
+							<input type="hidden" name="id" value="{{$order->id}}" />
+							<select name="status">
+								<option value="pending" {{$order->status=="pending" ? "selected" : ""}}> Pending </option>
+								<option value="processing" {{$order->status=="processing" ? "selected" : ""}}> Processing </option>
+								<option value="shipping" {{$order->status=="shipping" ? "selected" : ""}}> Shipping </option>
+								<option value="delivered" {{$order->status=="delivered" ? "selected" : ""}}> Delivered </option>
+							</select>
+							<button type="submit">Update</button>
 						</form>
 						@endif
-						<!-- View information and order history -->
-						<a href="user/{{$user->id}}.html"><button>User Info</button></a>
-						<a href="order-history/{{$user->id}}.html"><button>Orders</button></a>
-                    </td>
+					</td>
+                    <td>
+						<a href="/order/{{$order->id}}.html"><button>View</button></a>
+					</td>
                 </tr>
 				@endforeach
             </tbody>
