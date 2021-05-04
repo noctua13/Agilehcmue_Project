@@ -448,6 +448,13 @@ class ProductController
 		return view('admin.order-history-by-id', compact('orders'));
 	}
 
+	public function viewOrderHistoryByStatus($status) 
+	{
+		$orders = Order::where('status', $status)->get();
+		//dd($orders); 
+		return view('admin.order-history-by-id', compact('orders'));
+	}
+
 	public function viewOrderHistoryByDate($date) 
 	{
 		$tm =explode("-", $date);

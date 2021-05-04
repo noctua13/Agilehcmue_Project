@@ -57,7 +57,7 @@
     </div>
     <div class="search-form">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <form class="form-inline">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                     <button class="btn btn-outline-success btn-info my-2 my-sm-0" type="submit">
@@ -66,13 +66,25 @@
                     <!-- Add product -->
                 </form>
             </div>
-           <div class="col-sm-4">
+           <div class="col-sm-3">
                 <input style="width: 15%" id="getdate" value="0" min="0" max="31" type="number" required>
                 <input style="width: 15%" id="getmonth" value="0" min="0" max="12" type="number" required>
                 <input style="width: 30%" id="getyear" value="2010" min="2010" max="2090" type="number" required>
                 <button type="submit" onclick="getData()">Get data</button>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
+                <form style="right: 20px;position: absolute;">
+                    <label >Status:</label>
+                    <select name="status_search" id="status_search" onchange="statusSearch()">
+                        <option>All</option>
+                        <option value="pending">Pending</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipping">Shipping</option>
+                        <option value="delivered">Delivered</option>
+                    </select>
+                </form>
+            </div>
+            <div class="col-sm-3">
                 <form style="right: 20px;position: absolute;">
                     <label >Order of:</label>
                     <select name="time" id="time" onchange="timechange()">
@@ -206,6 +218,24 @@
             y=0
         }
         window.location.href= "http://127.0.0.1:8000/order-history-by-date/time="+d+"-"+m+"-"+y+".html" ;
+    }
+
+    function statusSearch() {
+        var x = document.getElementById("status_search").value;
+        console.log(x);
+        if (x=='pending'){
+            window.location.href= "http://127.0.0.1:8000/order-history+status=pending.html";
+        }
+        else if (x=='processing'){
+            window.location.href= "http://127.0.0.1:8000/order-history+status=processing.html";
+        }
+        else if (x=='shipping'){
+            window.location.href= "http://127.0.0.1:8000/order-history+status=shipping.html";
+        }
+        else if(x=='delivered'){
+            window.location.href= "http://127.0.0.1:8000/order-history+status=delivered.html";
+        }
+        else window.location.href="http://127.0.0.1:8000/order-history.html";
     }
    </script>
 @endsection
