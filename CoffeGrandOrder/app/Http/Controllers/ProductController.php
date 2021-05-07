@@ -412,6 +412,21 @@ class ProductController
 	////////////////////////////////////
 	//   IN THE WRONG CONTROLLER ATM  //
 	////////////////////////////////////
+	public function getOrderAdmin($id) {
+	 	$order = Order::where('id', $id)->first();
+	 	return view('admin.order-update', compact('order'));
+	}
+	public function updateOrder(Request $request)
+	{
+		$order = Order::where('id', $request->id)->first();
+		$order->name = $request->name;
+		$order->email = $request->email;
+		$order->phone = $request->phone;
+		$order->deliverytype = $request->delivery;
+		$order->address = $request->address;
+		$order->save();
+		return redirect()->route("order-history-by-id", ['id' => Auth::user()->id]);
+	}
 	public function updateOrderStatus(Request $request)
 	{
 		$order = Order::where('id', $request->id)->first();
@@ -494,6 +509,8 @@ class ProductController
 		}
 		return view('admin.order-history-by-id', compact('orders'));
 	}
+ 
+	
  }
 
 ?>
