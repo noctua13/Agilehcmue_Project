@@ -143,7 +143,7 @@ button:hover {
 				  <dd>
 				  	<label class="form-check form-check-inline">
 					  <input class="form-check-input" type="radio" name="size" id="inlineRadio2" value="1">
-					  <span class="form-check-label">Sm</span>
+					  <span class="form-check-label">S</span>
 					</label>
 					<label class="form-check form-check-inline">
 					  <input class="form-check-input" type="radio" name="size" id="inlineRadio2" value="2"checked>
@@ -176,7 +176,7 @@ button:hover {
 	</div> <!-- row.// -->
 	<hr>
 	<button class="btn btn-lg btn-primary text-uppercase"> Buy now </button>
-	<button class="btn btn-lg btn-success text-uppercase"> Add to cart </button>
+	<button class="btn btn-lg btn-success text-uppercase" href="{{route('cart')}}"> Add to cart </button>
 </form>
 </article> <!-- card-body.// -->
 		</aside> <!-- col.// -->

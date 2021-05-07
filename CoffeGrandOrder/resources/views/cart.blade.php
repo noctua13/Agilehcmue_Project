@@ -13,7 +13,7 @@
   margin: 20px 20px 20px 20px;
 }
 body{
-	background:#8500ff;
+	background: white ;
 }
 .button {
   cursor: pointer;
@@ -77,7 +77,7 @@ body{
 @section('content')
 
 @if (!Session::has('Cart'))
-	<p style="font-size: 90px;color:blue;text-align: center;align-items: center;padding-top: 50px;font-weight: 900">Cart is empty, buy something </p>
+	<p style="font-size: 90px;color:black;text-align: center;align-items: center;padding-top: 50px;font-weight: 900"><img src="product-images/empty-cart.png" alt="Product" height=400 ></p>
 @else
 	@php
 		$cart = Session::get('Cart')
@@ -95,7 +95,7 @@ body{
 		<tr style="border-bottom: solid black 2px;">
 			<td><b>{{$item['name']}}</b><br />
 				@if ($item['size'] == 1) 
-					Sm
+					S
 				@elseif ($item['size'] == 2)
 					M
 				@else
@@ -114,26 +114,28 @@ body{
 					<input type="hidden" name="size" value="{{$item['size']}}" />
 					<input type="hidden" name="customizable" value="{{$item['customizable']}}" />
 					<input type="number" name="quantity" min="1" value="{{$item['quantity']}}" style="width:50px;">
-					<button> Update </button>
+					<button class="btn btn-primary"> Update </button>
 				</form>
 			
 			</td>
-			<td>{{$item['price']}}</td>
+			<td>
+			{{$item['price']}} $
+			</td>
 			<td>
 				<form action="/cart/delete" method="get">
 					<input type="hidden" name="id" value="{{$item['id']}}" />
 					<input type="hidden" name="size" value="{{$item['size']}}" />
 					<input type="hidden" name="customizable" value="{{$item['customizable']}}" />
-					<button> Remove </button>
+					<button class="btn btn-danger"> Remove </button>
 				</form>
 			</td>
 		</tr>
 		@endforeach
 	</table>
 	<div class="container-button">
-	<a class ="button" href="/cart/destroy"> Destroy Cart </a>
+	<a class ="btn btn-danger" href="/cart/destroy"> Destroy Cart </a>
 	
-	<a class="button" href="/checkout.html"> Proceed to Checkout </a>
+	<a class="btn btn-success" href="/checkout.html"> Proceed to Checkout </a>
 	</div>
 </div>	
 @endif
