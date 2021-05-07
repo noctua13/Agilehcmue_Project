@@ -55,7 +55,7 @@
 									<option value="shipping" {{$orderdetail->status=="shipping" ? "selected" : ""}}> Shipping </option>
 									<option value="delivered" {{$orderdetail->status=="delivered" ? "selected" : ""}}> Delivered </option>
 								</select>
-								<button type="submit">Update</button>
+								<button type="submit">Change Status</button>
 							</form>
 							@else
 								cancelled
@@ -76,6 +76,16 @@
 						@endif
 					@else
 						{{$orderdetail->status}}
+					@endif
+				</td>
+			</tr>
+			<tr>
+				<td>Action</td>
+				<td>
+					@if ($orderdetail->status == "pending")
+					<a href="/order-update/{{$orderdetail->id}}.html"><button>Update Information</button></a>
+					@else
+						None
 					@endif
 				</td>
 			</tr>

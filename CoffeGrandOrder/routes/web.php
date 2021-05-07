@@ -111,7 +111,7 @@ Route::get('/user/{id}.html', ["as" => "user-view", 'uses' => 'App\Http\Controll
 Route::get('/user/promote/{id}', ["as" => "user-promote", 'uses' => 'App\Http\Controllers\UserController@promote']);
 Route::get('/user/demote/{id}', ["as" => "product-demote", 'uses' => 'App\Http\Controllers\UserController@demote']);
 
-/* ORDER MANAGEMENT - to be implemented */
+/* ORDER MANAGEMENT */
 Route::get('/order-history.html', ["as" => "order-history", 'uses' => function () {
 	return view('admin/order-history');
 }]);
@@ -130,6 +130,8 @@ Route::get('/order-history-by-date/time={time}.html', ["as" => "order-history", 
 
 Route::get('/order/{id}.html', ["as" => "order-view", 'uses' => 'App\Http\Controllers\ProductController@viewOrder']);
 Route::get('/order/update/status', ["as" => "order-update-status", 'uses' => 'App\Http\Controllers\ProductController@updateOrderStatus']);
+Route::get('/order-update/{id}.html', ["as" => "order-update-ui", 'uses' => 'App\Http\Controllers\ProductController@getOrderAdmin']);
+Route::post('/order/update', ["as" => "order-update", 'uses' => 'App\Http\Controllers\ProductController@updateOrder']);
 
 /* DISCOUNT MANAGEMENT - to be implemented */
 

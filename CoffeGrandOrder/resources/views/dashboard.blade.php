@@ -61,7 +61,7 @@ $address = Auth::user()->address;
                     <?php echo "<td> $email </td>" ?>
                 </tr>
                 <tr>
-                    <td class="first-colmn">PhoneNumber</td>
+                    <td class="first-colmn">Phone Number</td>
                     <?php echo "<td> $phone </td>" ?>
                 </tr>
                 <tr>
@@ -69,23 +69,27 @@ $address = Auth::user()->address;
                     <?php echo "<td> $address </td>" ?>
                 </tr>
                 <tr>
-                    <td class="first-colmn">Job</td>
-                    <td></td>
+                    <td class="first-colmn">Verified</td>
+                    <td>
+						@if (Auth::user()->isverified == 1)
+							Yes
+						@else
+							No
+						@endif
+					</td>
                 </tr>
                 <tr>
-                    <td class="first-colmn">Gender</td>
-                    <td></td>
+                    <td class="first-colmn">Permission</td>
+                    <td>
+						@if (Auth::user()->permission == 1)
+							Administrator
+						@else
+							Customer
+						@endif
+					</td>
                 </tr>
                 <tr>
                     <td class="first-colmn">Date of birth</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="first-colmn">Website</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="first-colmn">About</td>
                     <td></td>
                 </tr>
             </table>

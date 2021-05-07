@@ -149,13 +149,13 @@
 								<option value="shipping" {{$order->status=="shipping" ? "selected" : ""}}> Shipping </option>
 								<option value="delivered" {{$order->status=="delivered" ? "selected" : ""}}> Delivered </option>
 							</select>
-							
+							<button style="width: 100%; margin: 5px;" type="submit">Change</button>
 						</form>
 						@endif
 					</td>
                     <td>
 						<a href="/order/{{$order->id}}.html"><button style="width: 100%; margin: 5px;">View</button></a>
-                        <button style="width: 100%; margin: 5px;" type="submit">Update</button>
+                        <a href="/order-update/{{$order->id}}.html"><button style="width: 100%; margin: 5px;">Update</button></a>
 					</td>
                 </tr>
 				@endforeach
