@@ -112,9 +112,15 @@ Route::get('/user/promote/{id}', ["as" => "user-promote", 'uses' => 'App\Http\Co
 Route::get('/user/demote/{id}', ["as" => "product-demote", 'uses' => 'App\Http\Controllers\UserController@demote']);
 
 /* ORDER MANAGEMENT */
+
+//////////////////////////////////
+// View all orders
 Route::get('/order-history.html', ["as" => "order-history", 'uses' => function () {
 	return view('admin/order-history');
 }]);
+
+/////////////////////////////////
+//Sort by day/month/year/userid/status/specific date
 
 Route::get('/order-history-today.html', ["as" => "order-history", 'uses' => 'App\Http\Controllers\ProductController@viewOrderHistoryToday']);
 
@@ -128,10 +134,34 @@ Route::get('/order-history+status={status}.html', ["as" => "order-history", 'use
 
 Route::get('/order-history-by-date/time={time}.html', ["as" => "order-history", 'uses' => 'App\Http\Controllers\ProductController@viewOrderHistoryByDate']);
 
+/////////////////////////////////
+//View an order
+
 Route::get('/order/{id}.html', ["as" => "order-view", 'uses' => 'App\Http\Controllers\ProductController@viewOrder']);
+
+////////////////////////////////
+//Update status
 Route::get('/order/update/status', ["as" => "order-update-status", 'uses' => 'App\Http\Controllers\ProductController@updateOrderStatus']);
+
+///////////////////////////////
+//Update information UI
 Route::get('/order-update/{id}.html', ["as" => "order-update-ui", 'uses' => 'App\Http\Controllers\ProductController@getOrderAdmin']);
+
+//////////////////////////////
+//Update information
 Route::post('/order/update', ["as" => "order-update", 'uses' => 'App\Http\Controllers\ProductController@updateOrder']);
+
+/////////////////////////////
+//Order Content UI
+Route::get('/order-content-update/{id}.html', ["as" => "order-content-update-ui", 'uses' => 'App\Http\Controllers\ProductController@displayOrderCart']);
+
+////////////////////////////
+//Order Content CRUD
+Route::get('/ordercart/insert', ["as" => "ordercart-insert", 'uses' => 'App\Http\Controllers\ProductController@insertOrderCart']);
+Route::get('/ordercart/update', ["as" => "ordercart-update", 'uses' => 'App\Http\Controllers\ProductController@updateOrderCart']);
+Route::get('/ordercart/delete', ["as" => "ordercart-delete", 'uses' => 'App\Http\Controllers\ProductController@deleteOrderCart']);
+Route::get('/ordercart/destroy', ["as" => "ordercart-destroy", 'uses' => 'App\Http\Controllers\ProductController@destroyOrderCart']);
+
 
 /* DISCOUNT MANAGEMENT - to be implemented */
 
