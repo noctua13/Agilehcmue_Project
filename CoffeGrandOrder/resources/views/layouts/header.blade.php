@@ -21,8 +21,17 @@
               <li><a href="{{route('homepage')}}" >Home</a></li>
                 <li><a href="{{route('today-special')}}">Today Special</a></li>
                 <li><a href="{{route('products')}}">Menu</a></li>
-                <li><a href="{{route('cart')}}">Cart</a></li>
-                
+                <li><a href="{{route('cart')}}">Cart (
+				@if (Session::has('Cart'))
+				{{count(Session::get('Cart'))}}
+				@else
+					0
+				@endif
+				)
+				</a></li>
+				@if (Session::has('OrderCart'))
+				<li><a href="/order-content-update/{{Session::get('OrderCartID')}}.html">Order Change ( {{count(Session::get('OrderCart'))}} )</a></li>
+				@endif
                 <li><a href="{{route('contact')}}">Contact</a></li>
                 
                 <?php

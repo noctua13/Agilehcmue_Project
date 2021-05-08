@@ -250,7 +250,7 @@
 						<a href="/order/{{$order->id}}.html"><button style="width: 100%; margin: 5px;">View</button></a>
                         @if ($order->status=="pending")
 						<a href="/order-update/{{$order->id}}.html"><button style="width: 100%; margin: 5px;">Update A</button></a>
-						<a href="/order-content-update/{{$order->id}}.html"><button style="width: 100%; margin: 5px;">Update B</button></a>
+						<a href="/order-content-loader/{{$order->id}}.html"><button style="width: 100%; margin: 5px;">Update B</button></a>
 						@endif
 					</td>
                 </tr>

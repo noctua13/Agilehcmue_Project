@@ -125,7 +125,7 @@ button:hover {
   <dd>Russia, USA, and Europe</dd>
 </dl>   item-property-hor .//
  -->
-<form action="/cart/insert" method="get">
+<form action="/cart/insert" method="get" id="cartform">
 <input type="hidden" name="id" value="{{$product->id}}" />
 <hr>
 	<div class="row">
@@ -175,8 +175,10 @@ button:hover {
 		</div> <!-- col.// -->
 	</div> <!-- row.// -->
 	<hr>
-	<button class="btn btn-lg btn-primary text-uppercase"> Buy now </button>
-	<button class="btn btn-lg btn-success text-uppercase" href="{{route('cart')}}"> Add to cart </button>
+	@if (Session::has('OrderCart'))
+	<button class="btn btn-lg btn-primary text-uppercase changeorderbtn"> Add to your order </button>
+	@endif
+	<button class="btn btn-lg btn-success text-uppercase"> Add to cart </button>
 </form>
 </article> <!-- card-body.// -->
 		</aside> <!-- col.// -->
@@ -194,4 +196,11 @@ button:hover {
 @section('page-js')
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+$(".changeorderbtn").on("click", function(e){
+	e.preventDefault();
+	$('#cartform').attr('action', "/ordercart/insert").submit();
+});
+</script>
 @endsection

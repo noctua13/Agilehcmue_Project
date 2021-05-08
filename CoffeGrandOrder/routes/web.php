@@ -152,8 +152,12 @@ Route::get('/order-update/{id}.html', ["as" => "order-update-ui", 'uses' => 'App
 Route::post('/order/update', ["as" => "order-update", 'uses' => 'App\Http\Controllers\ProductController@updateOrder']);
 
 /////////////////////////////
+//Load data into Order Content UI
+Route::get('/order-content-loader/{id}.html', ["as" => "order-content-loader", 'uses' => 'App\Http\Controllers\ProductController@displayOrderCart']);
 //Order Content UI
-Route::get('/order-content-update/{id}.html', ["as" => "order-content-update-ui", 'uses' => 'App\Http\Controllers\ProductController@displayOrderCart']);
+Route::get('/order-content-update/{id}.html', ["as" => "product-content-update-ui", 'uses' => function () {
+	return view('admin.order-content-update');
+}]);
 
 ////////////////////////////
 //Order Content CRUD

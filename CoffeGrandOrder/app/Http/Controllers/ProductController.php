@@ -101,7 +101,10 @@ class ProductController
 	///////////////////////////////////////////////
 	//     CART AND CHANGE ORDER MANAGEMENT      //
 	///////////////////////////////////////////////
-	public function insertCart(Request $request) {
+	
+	//Insert an item into the cart
+	public function insertCart(Request $request) 
+	{
 	//get id and quantity sent from form
 	$id = $request->id;
 	$quantity = $request->quantity;
@@ -145,6 +148,53 @@ class ProductController
 	//replace current session with new cart
 	Session::forget('Cart');
 	Session::put('Cart', $productList);
+	return redirect()->route("products");
+	}
+	//Insert an item into the existing order
+	public function insertOrderCart(Request $request) {
+	//get id and quantity sent from form
+	$id = $request->id;
+	$quantity = $request->quantity;
+	$size = $request->size;
+	$customizable = $request->customizable;
+	
+	//initialize list of products in cart
+	$productList = array();
+	
+	//get product detail from id
+	$productDetail = Product::where('id', $id)->first();
+
+	//if cart exists, add item into cart
+	if (Session::has('OrderCart')) 
+	{			
+		//store current cart into productList
+		$productList = Session::get('OrderCart');
+		//check if product already in cart
+		$isProductExist = false;
+		foreach($productList as &$product) 
+		{
+			if ($product['id'] == $id && $product['size'] == $size && $product['customizable'] == $customizable) 
+			{
+				$product['quantity'] = $product['quantity'] + $quantity;
+				$isProductExist = true;
+				break;
+			}
+		}
+		if (!$isProductExist) 
+		{
+		//if the product is not in the cart yet
+		//push new product into the cart
+		array_push($productList, array('id' => $id, 'name' => $productDetail->name, 'price' => $productDetail->price, 'size' => $size, 'customizable' => $customizable, 'quantity' => $quantity, 'image' => $productDetail->image));
+		}
+	}
+	//if cart does not exist, create one and put this product in
+	else 
+	{
+		array_push($productList, array('id' => $id, 'name' => $productDetail->name, 'price' => $productDetail->price, 'size' => $size, 'customizable' => $customizable, 'quantity' => $quantity, 'image' => $productDetail->image));
+	}
+	//replace current session with new cart
+	Session::forget('OrderCart');
+	Session::put('OrderCart', $productList);
 	return redirect()->route("products");
 	}
 	
@@ -204,7 +254,7 @@ class ProductController
 		}
 		return view('cart', compact('sum'));
 	}
-	//Display cart content of an order
+	//Loading the cart content into the admin.order-content-update UI
 	public function displayOrderCart($id) 
 	{
 		$ordercontents = Ordercontent::where('orderid', $id)->get();
