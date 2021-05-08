@@ -21,6 +21,8 @@
               <li><a href="{{route('homepage')}}" >Home</a></li>
                 <li><a href="{{route('today-special')}}">Today Special</a></li>
                 <li><a href="{{route('products')}}">Menu</a></li>
+                <li><a href="{{route('cart')}}">Cart</a></li>
+                
                 <li><a href="{{route('contact')}}">Contact</a></li>
                 
                 <?php
