@@ -167,6 +167,14 @@ Route::get('/ordercart/delete', ["as" => "ordercart-delete", 'uses' => 'App\Http
 Route::get('/ordercart/destroy', ["as" => "ordercart-destroy", 'uses' => 'App\Http\Controllers\ProductController@destroyOrderCart']);
 
 
+///////////////////////////
+//PAYPAL
+
+Route::get('/paypal/thanh-toan', ["as" => "paypal-thanhtoan", 'uses' => 'App\Http\Controllers\PaypalController@thanhToan']);
+Route::get('/paypal/status', ["as" => "paypal-status", 'uses' => 'App\Http\Controllers\PaypalController@status'] );
+
+//
+
 /* DISCOUNT MANAGEMENT - to be implemented */
 
 //////////////////////////
@@ -174,6 +182,6 @@ Route::get('/ordercart/destroy', ["as" => "ordercart-destroy", 'uses' => 'App\Ht
 //////////////////////////
 //Route::view('/register', 'register');
 //Route::post('/register', [registerController::class, 'registerFunction']);
-//Route::get('/test', [testController::class, 'test']);
+//Route::get('/test', ["as" => "test", 'uses' => 'App\Http\Controllers\CartController@getCart']);
 
 //Route::get('/product/{id}', [ProductController::class,'deleteProduct']);

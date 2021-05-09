@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'ed0eb469d3b9740f199f80c3c66eb0b039185293',
+    'reference' => '1f9cf8d9b32e09b0bc6149f91a47587496aefbd5',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -445,7 +445,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'ed0eb469d3b9740f199f80c3c66eb0b039185293',
+      'reference' => '1f9cf8d9b32e09b0bc6149f91a47587496aefbd5',
     ),
     'laravel/sail' => 
     array (
@@ -565,6 +565,15 @@
       array (
       ),
       'reference' => '943b5d70cc5ae7483f6aff6ff43d7e34592ca0f5',
+    ),
+    'paypal/rest-api-sdk-php' => 
+    array (
+      'pretty_version' => '1.14.0',
+      'version' => '1.14.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '72e2f2466975bf128a31e02b15110180f059fc04',
     ),
     'phar-io/manifest' => 
     array (
