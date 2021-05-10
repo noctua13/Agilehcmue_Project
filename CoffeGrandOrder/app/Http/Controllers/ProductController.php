@@ -394,7 +394,7 @@ class ProductController
 		$order->orderdate = $date;
 	 	$order->save();
 	 	$productList = Session::get('OrderCart');
-		
+		$deletedRows = Ordercontent::where('orderid', Session::get('OrderCartID'))->delete();
 	 	foreach ($productList as $key => $value) 
 	 	{
 	 		$proorderProduct = new Ordercontent();
@@ -407,7 +407,6 @@ class ProductController
 	 		$proorderProduct->save();
 		}
 		Session::forget('OrderCart');
-		$deletedRows = Ordercontent::where('orderid', Session::get('OrderCartID'))->delete();
 		Session::forget('OrderCartID');
 		
 		return redirect()->route('dashboard');
