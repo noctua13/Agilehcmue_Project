@@ -40,6 +40,23 @@ button:hover {
   opacity: 0.8;
 }
 
+/*set for input button*/
+.btn-input {
+  background-color: #ffd727;
+  color: rgb(40, 149, 245);
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Add a hover effect for buttons */
+.btn-input:hover {
+  opacity: 0.8;
+}
+
+
 /* Extra style for the cancel button (red) */
 .cancelbtn {
   width: auto;
@@ -109,7 +126,9 @@ span.psw {
 	<label for="address"><b>Address</b></label>
     <input type="text" placeholder="Enter delivery destination..." name="address" id="address-text" required>
 	
-    <button type="submit">Checkout</button class="submit">
+    <button type="submit" name="method" value="submit">Checkout</button class="submit">
+    <input class="btn-input" type="submit" name="method" value="Paypal" />
+      
     
   </div>
 </form>

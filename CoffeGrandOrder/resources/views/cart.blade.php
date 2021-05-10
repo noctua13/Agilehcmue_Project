@@ -137,7 +137,7 @@ body{
 	
 	<a class="btn btn-success" href="/checkout.html"> Proceed to Checkout </a>
 	
-	<a class="btn btn-warning" href="/paypal/thanh-toan"> Paypal </a>
+	
 	</div>
 </div>	
 @endif

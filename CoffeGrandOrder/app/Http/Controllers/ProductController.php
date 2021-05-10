@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use App\Product;
 use App\Order;
 use App\Ordercontent;
+use App\Services\PaypalService as PayPalSvc;
 
 // use Mail;
 use Session;
@@ -364,6 +365,9 @@ class ProductController
 		$order->orderdate = $date;
 	 	$order->save();
 	 	$productList = Session::get('Cart');
+		if ($productList == NULL){
+			return redirect("../products.html");
+		}
 	 	foreach ($productList as $key => $value) 
 	 	{
 	 		$proorderProduct = new Ordercontent();
@@ -375,8 +379,55 @@ class ProductController
 			$proorderProduct->customizable = $value['customizable'];
 	 		$proorderProduct->save();
 		}
-		Session::forget('Cart');
-		return redirect()->route('products');
+		$method = $request->method;
+		
+//////// check method = paypal /////////
+		if ($method == "Paypal")
+		{
+			
+			$paypal = new PayPalSvc();
+			
+			//Create a array with some product within;
+			$data = array();
+			foreach ($productList as $value) 
+			{
+				$cost = (double)($value['price'] / 23000);
+					$ele = [
+						'name' => $value['name'],
+						'quantity' => $value['quantity'],
+						'price' => $cost,
+						'sku' => $value['id']
+					];
+					//echo $value['quantity'];
+					array_push($data, $ele);
+			}
+	
+			//description for transaction, miêu tả lại cái trans này dùng làm gì
+			$transactionDescription = "Paypal payment";
+	
+			//Khởi tạo các đường dẫn khả dụng, cũng như các hàm phương thức có thể
+			//được thực hiện
+			$paypalCheckoutUrl = $paypal
+									  // ->setCurrency('eur')
+									  ->setReturnUrl(url('paypal/status'))
+									  // ->setCancelUrl(url('paypal/status'))
+									  ->setItem($data)
+									  // ->setItem($data[0])
+									  // ->setItem($data[1])
+									  ->createPayment($transactionDescription);
+	
+			if ($paypalCheckoutUrl) {
+	
+				return redirect($paypalCheckoutUrl);
+			} else {
+				dd(['Error']);
+			}
+		}
+//////// end check method = Paypal /////////
+		else{
+			Session::forget('Cart');
+			return redirect()->route('products');
+		}
 	}
 
 	//update an order's content into the database

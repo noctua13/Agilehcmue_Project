@@ -7,7 +7,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\PaypalService as PayPalSvc;
 use Session;
@@ -24,9 +24,50 @@ class PaypalController extends Controller
         $this->paypalSvc = $paypalSvc;
     }
 
-    public function thanhToan()
+    public function thanhToan(Request $request)
     {
+        //code from function POSTORDER
+        /*$order = new Order();
+        if (Auth::check()) 
+        {
+            $order->userid = Auth::user()->id;
+        }
+        $order->name = $request->name;
+        $order->email = $request->email;
+        $order->phone = $request->phone;
+        $order->status = "pending";
+        $order->address = $request->address;
+        $order->deliverytype = $request->delivery;
+        $sum = 0;
+
+        $myCart = Session::get('Cart');
+        foreach($myCart as $item)
+        {
+            $indivCost = $item['price'];
+            $sum += $item['quantity'] * $indivCost;
+        }
+            $order->price = $sum;
+        
+        $date = date_create();
+
+        $order->orderdate = $date;
+        $order->save();
         $productList = Session::get('Cart');
+        foreach ($productList as $key => $value) 
+        {
+            $proorderProduct = new Ordercontent();
+            $proorderProduct->orderid = $order->id;
+            $proorderProduct->productid = $value['id'];
+            $proorderProduct->quantity = $value['quantity'];
+            $proorderProduct->price = $value['price'];
+           $proorderProduct->size = $value['size'];
+           $proorderProduct->customizable = $value['customizable'];
+            $proorderProduct->save();
+       }*/
+        //////////
+        
+        //code move -> paypal
+        
         if ($productList == NULL){
             return redirect("../products.html");
         }
@@ -44,28 +85,6 @@ class PaypalController extends Controller
                 //echo $value['quantity'];
                 array_push($data, $ele);
         }
-        
-
-        /*$data = [
-            [
-                'name' => 'Vinataba',
-                'quantity' => 1,
-                'price' => 1.5,
-                'sku' => '1'
-            ],
-            [
-                'name' => 'Marlboro',
-                'quantity' => 1,
-                'price' => 1.6,
-                'sku' => '2'
-            ],
-            [
-                'name' => 'Esse',
-                'quantity' => 1,
-                'price' => 1.8,
-                'sku' => '3'
-            ]
-        ];*/
 
         //description for transaction, miêu tả lại cái trans này dùng làm gì
         $transactionDescription = "Paypal payment";
