@@ -74,9 +74,9 @@ Route::post('/checkout/create', ["as" => "checkout-create", 'uses' => 'App\Http\
 ///////////////////////////
 // REGISTERED USERS ONLY //
 ///////////////////////////
-Route::get('/dashboard.html', function () {
+Route::get('/dashboard.html', ["as" => "dashboard", 'uses' => function () {
 	return view('dashboard');
-})->middleware('auth');
+}])->middleware('auth');
 
 //////////////////////////
 // ADMINISTRATORS ONLY  //
@@ -161,11 +161,11 @@ Route::get('/order-content-update/{id}.html', ["as" => "product-content-update-u
 
 ////////////////////////////
 //Order Content CRUD
-Route::get('/ordercart/insert', ["as" => "ordercart-insert", 'uses' => 'App\Http\Controllers\ProductController@postOrderCart']);
+Route::get('/ordercart/insert', ["as" => "ordercart-insert", 'uses' => 'App\Http\Controllers\ProductController@insertOrderCart']);
 Route::get('/ordercart/update', ["as" => "ordercart-update", 'uses' => 'App\Http\Controllers\ProductController@updateOrderCart']);
 Route::get('/ordercart/delete', ["as" => "ordercart-delete", 'uses' => 'App\Http\Controllers\ProductController@deleteOrderCart']);
 Route::get('/ordercart/destroy', ["as" => "ordercart-destroy", 'uses' => 'App\Http\Controllers\ProductController@destroyOrderCart']);
-
+Route::get('/ordercart/submit', ["as" => "ordercart-submit", 'uses' => 'App\Http\Controllers\ProductController@postOrderCart']);
 
 ///////////////////////////
 //PAYPAL

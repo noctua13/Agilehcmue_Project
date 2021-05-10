@@ -133,7 +133,7 @@ body{
 	<div class="container-button">
 	<a class ="button" href="/ordercart/destroy"> Cancel changing Order's content </a>
 	
-	<a class ="button" href="/ordercart/insert"> Confirm changing Order's content </a>
+	<a class ="button" href="/ordercart/submit"> Confirm changing Order's content </a>
 	</div>
 </div>	
 @endif
