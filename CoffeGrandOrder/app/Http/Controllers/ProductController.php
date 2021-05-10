@@ -375,6 +375,42 @@ class ProductController
 			$proorderProduct->customizable = $value['customizable'];
 	 		$proorderProduct->save();
 		}
+		Session::forget('Cart');
+		return redirect()->route('products');
+	}
+
+	//update an order's content into the database
+		public function postOrderCart(Request $request)
+	{
+	 	$order = Order::where('id', $request->id)->first();
+		$myCart = Session::get('OrderCart');
+		foreach($myCart as $item)
+		{
+			$indivCost = $item['price'];
+			$sum += $item['quantity'] * $indivCost;
+		}
+	 	$order->price = $sum;
+
+		$order->orderdate = $date;
+	 	$order->save();
+	 	$productList = Session::get('OrderCart');
+		
+	 	foreach ($productList as $key => $value) 
+	 	{
+	 		$proorderProduct = new Ordercontent();
+	 		$proorderProduct->orderid = $order->id;
+	 		$proorderProduct->productid = $value['id'];
+	 		$proorderProduct->quantity = $value['quantity'];
+	 		$proorderProduct->price = $value['price'];
+			$proorderProduct->size = $value['size'];
+			$proorderProduct->customizable = $value['customizable'];
+	 		$proorderProduct->save();
+		}
+		Session::forget('OrderCart');
+		$deletedRows = Ordercontent::where('orderid', Session::get('OrderCartID'))->delete();
+		Session::forget('OrderCartID');
+		
+		return redirect()->route('dashboard');
 	}
 
 
