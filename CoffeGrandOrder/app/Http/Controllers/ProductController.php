@@ -382,7 +382,8 @@ class ProductController
 	//update an order's content into the database
 		public function postOrderCart(Request $request)
 	{
-	 	$order = Order::where('id', $request->id)->first();
+	 	$sum = 0;
+		$order = Order::where('id', Request::get('OrderCartID'))->first();
 		$myCart = Session::get('OrderCart');
 		foreach($myCart as $item)
 		{
@@ -390,9 +391,8 @@ class ProductController
 			$sum += $item['quantity'] * $indivCost;
 		}
 	 	$order->price = $sum;
-
-		$order->orderdate = $date;
 	 	$order->save();
+		
 	 	$productList = Session::get('OrderCart');
 		$deletedRows = Ordercontent::where('orderid', Session::get('OrderCartID'))->delete();
 	 	foreach ($productList as $key => $value) 
