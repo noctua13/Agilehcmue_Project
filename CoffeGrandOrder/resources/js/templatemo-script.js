@@ -8,11 +8,11 @@ $(document).ready(function(){
 
 	// Mobile menu
 	$('.mobile-menu-icon').click(function(){
-		$('.tm-nav').slideToggle();
+		$('.tm-nav').show();
 	});
 
 	$( window ).resize(function() {
-		if($( window ).width() > 767) {
+		if($( window ).width() > 991) {
 			$('.tm-nav').show();
 		} else {
 			$('.tm-nav').hide();

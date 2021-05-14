@@ -680,8 +680,13 @@ button.tm-more-button {
   .tm-daily-menu-img { margin-bottom: 30px; }
   #google-map { margin-top: 50px; }
 }
-
-@media screen and (max-width: 767px) {
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100000;
+}
+@media screen and (max-width: 991px) {
   .tm-nav { display: none; }
   .tm-nav li a { padding-left: 35px; }
   .tm-logo-container { margin-left: 15px; }  
@@ -702,7 +707,7 @@ button.tm-more-button {
     position: fixed;
     z-index: 1000;
     top: 69px;
-    right: 15px;
+    right: 0px;
     background-color: rgba(0,0,0,0.7);
   }
   .tm-nav li { float: none; }
@@ -734,7 +739,7 @@ button.tm-more-button {
   }
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 767px) {
   .tm-welcome-content {  margin-bottom: 190px; }
   .tm-product {
     -webkit-box-orient: vertical;
@@ -743,15 +748,17 @@ button.tm-more-button {
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  .tm-product-text {
+  
+  .tm-product-description { text-align: center; }
+}
+@media screen and (max-width: 767px) {
+.tm-product-text {
     max-width: 100%;
     margin-top: 20px;
     margin-bottom: 15px;
     text-align: center;
   }
-  .tm-product-description { text-align: center; }
 }
-
 @media screen and (max-width: 550px) {
   .tm-welcome-content { margin-bottom: 130px; }
 }

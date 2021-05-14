@@ -5,7 +5,7 @@
       <div class="loader-section section-right"></div>
     </div>
     <!-- End Preloader -->
-    <div class="tm-top-header">
+    <div class="tm-top-header" id="CGOHeader">
       <div class="container">
         <div class="row">
           <div class="tm-top-header-inner">
@@ -19,8 +19,8 @@
             <nav class="tm-nav">
               <ul>
               <li><a href="{{route('homepage')}}" >Home</a></li>
-                <li><a href="{{route('today-special')}}">Today Special</a></li>
-                <li><a href="{{route('products')}}">Menu</a></li>
+                <!-- <li><a href="{{route('today-special')}}">Today Special</a></li>
+ -->                <li><a href="{{route('products')}}">Menu</a></li>
                 <li><a href="{{route('cart')}}">Cart (
 				@if (Session::has('Cart'))
 				{{count(Session::get('Cart'))}}
