@@ -5,7 +5,7 @@
       <div class="loader-section section-right"></div>
     </div>
     <!-- End Preloader -->
-    <div class="tm-top-header">
+    <div class="tm-top-header" id="CGOHeader">
       <div class="container">
         <div class="row">
           <div class="tm-top-header-inner">
