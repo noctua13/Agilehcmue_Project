@@ -18,7 +18,6 @@
 
 @section('content')
 
-<h1>Welcome to Dashboard , here is your profile</h1>
 
 <?php
 $user = Auth::user()->username;
@@ -28,18 +27,20 @@ $email = Auth::user()->email;
 $address = Auth::user()->address;
 ?>
 
-<div class="container">    
-  <div class="row">
-    <div class="panel panel-default">
+<div class="container" >    
+  <div class="row" >
+    <div class="panel panel-default"  >
     <div class="panel-heading">  <h4 >User Profile</h4></div>
       <div class="panel-body">
     <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
-      <img alt="User Pic" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive">
+      <img alt="User Pic" style="width:50%; height: 50%" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive">
     </div>
                       
-<div class="col-sm-9 r-layout-user">
+<div class="col-sm-9 r-layout-user" >
         <div>
-            <span class="text-lg text-bold pull-right"><a class="btn btn-info" href="/order-history/{{Auth::user()->id}}.html"><i class="fa fa-eye"></i> View Order History</a></span>
+        
+
+            <span class="text-lg text-bold pull-right"><a class="btn btn-info" href="/order-history/{{Auth::user()->id}}.html"><i class="fa fa-eye"></i> View Order History</a><a class="btn btn-danger" href="{{route('logout')}}">Log out</a></span>
 			@if (Auth::user()->permission == 1)
 			<span class="text-lg text-bold pull-right"><a class="btn btn-success" href="/product-list.html"><i class="fa fa-eye"></i> Product Management</a></span>
 			<span class="text-lg text-bold pull-right"><a class="btn btn-primary" href="/order-history.html"><i class="fa fa-eye"></i> Order Management</a></span>		
@@ -98,7 +99,6 @@ $address = Auth::user()->address;
     </div>
   </div>
 </div>
-<p>Bored already? <a class="btn btn-info" href="{{route('logout')}}">Log out</a>.</p>
 
 @endsection
 

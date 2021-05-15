@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layoutAdmin.main')
 @section('title', 'Coffee/Grand Order | Sửa sản phẩm')
 
 @section('page-css')

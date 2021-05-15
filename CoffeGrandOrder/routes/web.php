@@ -69,7 +69,9 @@ Route::post('/signup/store', ["as" => "user-store", 'uses' => 'App\Http\Controll
 Route::get('/checkout.html', ["as" => "checkout", 'uses' => function () {
 	return view('checkout');
 }]);
-Route::post('/checkout/create', ["as" => "checkout-create", 'uses' => 'App\Http\Controllers\ProductController@postOrder']);
+Route::post('/checkout/create', ["as" => "checkout-create", 'uses' =>  function (){
+	return view('home');
+}]);
 
 ///////////////////////////
 // REGISTERED USERS ONLY //
@@ -85,7 +87,12 @@ Route::get('/dashboard.html', function () {
 /* PRODUCT MANAGEMENT */
 
 Route::get('/product-list.html', ["as" => "product-list", 'uses' => function () {
+	if (Auth::user()->permission == 1){
 	return view('admin/product-list');
+	}
+	else {
+		return view('home');
+	}
 }]);
 
 Route::get('/product-view/{id}.html', ["as" => "product-view", 'uses' => 'App\Http\Controllers\ProductController@viewProductAdmin']);
@@ -103,7 +110,13 @@ Route::get('/product/delete', ["as" => "product-delete", 'uses' => 'App\Http\Con
 /* USER MANAGEMENT */
 
 Route::get('/user-list.html', ["as" => "user-list", 'uses' => function () {
-	return view('admin/user-list');
+	if (Auth::user()->permission == 1){
+		return view('admin/user-list');
+		}
+		else {
+			return view('home');
+		}
+	
 }]);
 
 Route::get('/user/{id}.html', ["as" => "user-view", 'uses' => 'App\Http\Controllers\UserController@view']);
@@ -113,7 +126,13 @@ Route::get('/user/demote/{id}', ["as" => "product-demote", 'uses' => 'App\Http\C
 
 /* ORDER MANAGEMENT */
 Route::get('/order-history.html', ["as" => "order-history", 'uses' => function () {
-	return view('admin/order-history');
+	if (Auth::user()->permission == 1){
+		return view('admin/order-history');
+		}
+		else {
+			return view('home');
+		}
+	
 }]);
 
 Route::get('/order-history-today.html', ["as" => "order-history", 'uses' => 'App\Http\Controllers\ProductController@viewOrderHistoryToday']);
