@@ -4,15 +4,30 @@
 
 /* HTML document is loaded. DOM is ready.
 -----------------------------------------*/
+window.onscroll = function() {stickyFunction()};
+
+var header = document.getElementById("CGOHeader");
+var sticky = header.offsetTop;
+
+function stickyFunction() {
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
 $(document).ready(function(){
 
 	// Mobile menu
 	$('.mobile-menu-icon').click(function(){
-		$('.tm-nav').slideToggle();
+		if ( $('.tm-nav').css('display')=='none'){
+      $('.tm-nav').show();
+    }
+    else {$('.tm-nav').hide();}
 	});
 
 	$( window ).resize(function() {
-		if($( window ).width() > 767) {
+		if($( window ).width() > 991) {
 			$('.tm-nav').show();
 		} else {
 			$('.tm-nav').hide();

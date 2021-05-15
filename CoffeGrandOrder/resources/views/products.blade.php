@@ -5,6 +5,19 @@
   <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet">
   <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
   <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
+  <style type="text/css">
+     @media screen and (max-width: 767px) {
+    #menuCate{
+      display: none;
+    }
+    #productGrid{
+      width: 100%;
+    }
+    .tm-product{
+      padding: 15px;
+    }
+  }
+  </style>
 @endsection
 @section('content')
 <section class="tm-welcome-section">
@@ -23,7 +36,7 @@
         <img src="img/table-set.png" alt="Table Set" class="tm-table-set img-responsive">  
       </div>      
     </section>
-    <div class="tm-main-section light-gray-bg">
+    <div class="tm-main-section light-gray-bg" style="padding: 15px;">
       <div class="container" id="main">
         <section class="tm-section row">
           <div class="col-lg-9 col-md-9 col-sm-8">
@@ -44,8 +57,8 @@
             <div class="tm-hr-container"><hr class="tm-hr"></div>
           </div>
           
-          <div class="row">
-            <div class="col-lg-4 col-md-4">
+          <div class="row" id="productGrid">
+            <div class="col-lg-4 col-md-4" id="menuCate">
               <div class="tm-position-relative margin-bottom-30">              
                 <nav class="tm-side-menu">
                   <ul>
@@ -59,12 +72,13 @@
                 <img src="img/vertical-menu-bg.png" alt="Menu bg" class="tm-side-menu-bg">
               </div>  
             </div>            
-            <div class="tm-menu-product-content col-lg-8 col-md-8"> <!-- menu content -->
-
+            <div class="tm-menu-product-content col-lg-8 col-md-8 col-sm-12"> <!-- menu content -->
+              <div class="row">
               @foreach($products as $product)
-              
+              <!---->
+              <div class=" col-6 col-sm-6 col-md-12" style="padding: 15px">
               <div class="tm-product">
-                <img src="product-images/{{$product->image}}" alt="Product" height=200 >
+                <img src="product-images/{{$product->image}}" alt="Product" height=200 width=200 >
                 <div class="tm-product-text">
                   <h3 class="tm-product-title" > <a href="product/{{$product->id}}.html">{{$product->name}}</a></h3>
                   <p class="tm-product-description">{!!$product->description!!}</p>
@@ -75,8 +89,9 @@
 ">VND</p> </a>
                 </div>
               </div>
-
+</div>
               @endforeach
+            </div>
             <!--
 			  <div class="tm-product">
                 <img src="img/menu-1.jpg" alt="Product">

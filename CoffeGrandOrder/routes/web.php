@@ -76,9 +76,9 @@ Route::post('/checkout/create', ["as" => "checkout-create", 'uses' =>  function 
 ///////////////////////////
 // REGISTERED USERS ONLY //
 ///////////////////////////
-Route::get('/dashboard.html', function () {
+Route::get('/dashboard.html', ["as" => "dashboard", 'uses' => function () {
 	return view('dashboard');
-})->middleware('auth');
+}])->middleware('auth');
 
 //////////////////////////
 // ADMINISTRATORS ONLY  //
@@ -125,6 +125,9 @@ Route::get('/user/promote/{id}', ["as" => "user-promote", 'uses' => 'App\Http\Co
 Route::get('/user/demote/{id}', ["as" => "product-demote", 'uses' => 'App\Http\Controllers\UserController@demote']);
 
 /* ORDER MANAGEMENT */
+
+//////////////////////////////////
+// View all orders
 Route::get('/order-history.html', ["as" => "order-history", 'uses' => function () {
 	if (Auth::user()->permission == 1){
 		return view('admin/order-history');
@@ -134,6 +137,9 @@ Route::get('/order-history.html', ["as" => "order-history", 'uses' => function (
 		}
 	
 }]);
+
+/////////////////////////////////
+//Sort by day/month/year/userid/status/specific date
 
 Route::get('/order-history-today.html', ["as" => "order-history", 'uses' => 'App\Http\Controllers\ProductController@viewOrderHistoryToday']);
 
@@ -147,10 +153,46 @@ Route::get('/order-history+status={status}.html', ["as" => "order-history", 'use
 
 Route::get('/order-history-by-date/time={time}.html', ["as" => "order-history", 'uses' => 'App\Http\Controllers\ProductController@viewOrderHistoryByDate']);
 
+/////////////////////////////////
+//View an order
+
 Route::get('/order/{id}.html', ["as" => "order-view", 'uses' => 'App\Http\Controllers\ProductController@viewOrder']);
+
+////////////////////////////////
+//Update status
 Route::get('/order/update/status', ["as" => "order-update-status", 'uses' => 'App\Http\Controllers\ProductController@updateOrderStatus']);
+
+///////////////////////////////
+//Update information UI
 Route::get('/order-update/{id}.html', ["as" => "order-update-ui", 'uses' => 'App\Http\Controllers\ProductController@getOrderAdmin']);
+
+//////////////////////////////
+//Update information
 Route::post('/order/update', ["as" => "order-update", 'uses' => 'App\Http\Controllers\ProductController@updateOrder']);
+
+/////////////////////////////
+//Load data into Order Content UI
+Route::get('/order-content-loader/{id}.html', ["as" => "order-content-loader", 'uses' => 'App\Http\Controllers\ProductController@displayOrderCart']);
+//Order Content UI
+Route::get('/order-content-update/{id}.html', ["as" => "product-content-update-ui", 'uses' => function () {
+	return view('admin.order-content-update');
+}]);
+
+////////////////////////////
+//Order Content CRUD
+Route::get('/ordercart/insert', ["as" => "ordercart-insert", 'uses' => 'App\Http\Controllers\ProductController@insertOrderCart']);
+Route::get('/ordercart/update', ["as" => "ordercart-update", 'uses' => 'App\Http\Controllers\ProductController@updateOrderCart']);
+Route::get('/ordercart/delete', ["as" => "ordercart-delete", 'uses' => 'App\Http\Controllers\ProductController@deleteOrderCart']);
+Route::get('/ordercart/destroy', ["as" => "ordercart-destroy", 'uses' => 'App\Http\Controllers\ProductController@destroyOrderCart']);
+Route::get('/ordercart/submit', ["as" => "ordercart-submit", 'uses' => 'App\Http\Controllers\ProductController@postOrderCart']);
+
+///////////////////////////
+//PAYPAL
+
+Route::get('/paypal/thanh-toan', ["as" => "paypal-thanhtoan", 'uses' => 'App\Http\Controllers\PaypalController@thanhToan']);
+Route::get('/paypal/status', ["as" => "paypal-status", 'uses' => 'App\Http\Controllers\PaypalController@status'] );
+
+//
 
 /* DISCOUNT MANAGEMENT - to be implemented */
 
@@ -159,6 +201,6 @@ Route::post('/order/update', ["as" => "order-update", 'uses' => 'App\Http\Contro
 //////////////////////////
 //Route::view('/register', 'register');
 //Route::post('/register', [registerController::class, 'registerFunction']);
-//Route::get('/test', [testController::class, 'test']);
+//Route::get('/test', ["as" => "test", 'uses' => 'App\Http\Controllers\CartController@getCart']);
 
 //Route::get('/product/{id}', [ProductController::class,'deleteProduct']);

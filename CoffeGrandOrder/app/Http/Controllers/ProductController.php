@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use App\Product;
 use App\Order;
 use App\Ordercontent;
+use App\Services\PaypalService as PayPalSvc;
 
 // use Mail;
 use Session;
@@ -17,30 +18,6 @@ use Session;
 
 class ProductController
 {
-	// //get a list of posts: get 8 latest posts
-	// public function getPosts(Request $request) {
-	// 	if ($request->has('id')) 
-	// 	{
-	// 		$posts = Post::select('id','title','excerpt','image','status','created_at')->where('category_id', $request->id)->take(8)->get(); 
-	// 		return view('thanh.site.blogs', compact('posts'));
-	// 	}
-	// 	else
-	// 	{
-	// 		$posts = Post::select('id','title','excerpt','image','status','created_at')->orderBy('created_at', 'desc')->take(8)->get();
-	// 		return view('site.blogs', compact('posts'));
-	// 	}
-	// }
-
-	// //view post with "id" provided, get categories and 4 latest posts
-	// public function viewPost($id) {
-	// 	//get post with id provided
-	// 	$post = Post::where('id', $id)->first();
-	// 	//get 4 latest posts
-	// 	$latestPosts = Post::orderBy('created_at', 'desc')->take(4)->get();
-	// 	//get categories
-	// 	$categories = Category::orderBy('created_at', 'desc')->take(4)->get();
-	// 	return view('site.blog', compact('post', 'latestPosts', 'categories'));
-	// }
 	// //Store Contact content on the Contact table
 	// public function createContact(Request $request) {
 	// 	$this->validate($request, array(
@@ -94,8 +71,6 @@ class ProductController
 	// 	return view('products', compact('products','types'));
 	// }
 	
-	
-	
 	//Show product base on id
 	public function viewProduct($id) {
 	 	$product = Product::select('id', 'name', 'description', 'image', 'price','stock')->where('id', $id)->first();
@@ -124,7 +99,13 @@ class ProductController
 	// 	return back();
 	// }
 	
-	public function insertCart(Request $request) {
+	///////////////////////////////////////////////
+	//     CART AND CHANGE ORDER MANAGEMENT      //
+	///////////////////////////////////////////////
+	
+	//Insert an item into the cart
+	public function insertCart(Request $request) 
+	{
 	//get id and quantity sent from form
 	$id = $request->id;
 	$quantity = $request->quantity;
@@ -170,7 +151,55 @@ class ProductController
 	Session::put('Cart', $productList);
 	return redirect()->route("products");
 	}
+	//Insert an item into the existing order
+	public function insertOrderCart(Request $request) {
+	//get id and quantity sent from form
+	$id = $request->id;
+	$quantity = $request->quantity;
+	$size = $request->size;
+	$customizable = $request->customizable;
 	
+	//initialize list of products in cart
+	$productList = array();
+	
+	//get product detail from id
+	$productDetail = Product::where('id', $id)->first();
+
+	//if cart exists, add item into cart
+	if (Session::has('OrderCart')) 
+	{			
+		//store current cart into productList
+		$productList = Session::get('OrderCart');
+		//check if product already in cart
+		$isProductExist = false;
+		foreach($productList as &$product) 
+		{
+			if ($product['id'] == $id && $product['size'] == $size && $product['customizable'] == $customizable) 
+			{
+				$product['quantity'] = $product['quantity'] + $quantity;
+				$isProductExist = true;
+				break;
+			}
+		}
+		if (!$isProductExist) 
+		{
+		//if the product is not in the cart yet
+		//push new product into the cart
+		array_push($productList, array('id' => $id, 'name' => $productDetail->name, 'price' => $productDetail->price, 'size' => $size, 'customizable' => $customizable, 'quantity' => $quantity, 'image' => $productDetail->image));
+		}
+	}
+	//if cart does not exist, create one and put this product in
+	else 
+	{
+		array_push($productList, array('id' => $id, 'name' => $productDetail->name, 'price' => $productDetail->price, 'size' => $size, 'customizable' => $customizable, 'quantity' => $quantity, 'image' => $productDetail->image));
+	}
+	//replace current session with new cart
+	Session::forget('OrderCart');
+	Session::put('OrderCart', $productList);
+	return redirect()->route("products");
+	}
+	
+	//Remove an item from the cart
 	public function deleteCart(Request $request) {
 		$id = $request->id;
 		$size = $request->size;
@@ -190,7 +219,28 @@ class ProductController
 		Session::put('Cart', $productList);
 		return redirect()->route("cart");
 	}
+	//Remove an item from the cart of an order
+	public function deleteOrderCart(Request $request) {
+		$id = $request->id;
+		$size = $request->size;
+		$customizable = $request->customizable;
+		
+		$productList = Session::get('OrderCart');
+		
+		foreach($productList as $item => $value) 
+		{
+			if ($value['id'] == $id && $value['size'] == $size && $value['customizable'] == $customizable) 
+			{
+				unset($productList[$item]);
+				break;
+			}
+		}
+		Session::forget('OrderCart');
+		Session::put('OrderCart', $productList);
+		return view('admin.order-content-update');
+	}
 	
+	//Display cart content
 	public function displayCart() 
 	{
 		$sum = 0;
@@ -205,8 +255,30 @@ class ProductController
 		}
 		return view('cart', compact('sum'));
 	}
-	//Only update individual product
-	public function updateCart(Request $request) {
+	//Loading the cart content into the admin.order-content-update UI
+	public function displayOrderCart($id) 
+	{
+		$ordercontents = Ordercontent::where('orderid', $id)->get();
+		if ($ordercontents->isEmpty()) return redirect()->route("order-history-by-id", ['id' => Auth::user()->id]);
+		
+		if (Session::has('OrderCart')) Session::forget('OrderCart');
+		if (Session::has('OrderCartID')) Session::forget('OrderCartID');
+		
+		$productList = array();
+		
+		foreach ($ordercontents as $ordercontent) 
+		{
+			$productDetail = Product::where('id', $ordercontent->productid)->first();
+			array_push($productList, array('id' => $ordercontent->productid, 'name' => $productDetail->name, 'price' => $ordercontent->price, 'size' => $ordercontent->size, 'customizable' => $ordercontent->customizable, 'quantity' => $ordercontent->quantity, 'image' => $productDetail->image));
+		}
+		Session::put('OrderCart', $productList);
+		Session::put('OrderCartID', $id);
+		return view('admin.order-content-update');
+	}
+	
+	//Update the content of an item inside the cart
+	public function updateCart(Request $request) 
+	{
 		$id = $request->id;
 		$size = $request->size;
 		$customizable = $request->customizable;
@@ -226,14 +298,45 @@ class ProductController
 		Session::put('Cart', $productList);
 		return redirect()->route("cart");
 	}
+	//Update the content of an item inside an order
+	public function updateOrderCart(Request $request) 
+	{
+		$id = $request->id;
+		$size = $request->size;
+		$customizable = $request->customizable;
+		$quantity = $request->quantity;
+		$productList = Session::get('OrderCart');
+		
+		foreach($productList as $item => &$value) 
+		{
+			if ($value['id'] == $id && $value['size'] == $size && $value['customizable'] == $customizable) 
+			{
+				$value['quantity'] = $quantity;
+				break;
+			}
+		}
+		
+		Session::forget('OrderCart');
+		Session::put('OrderCart', $productList);
+		return view('admin.order-content-update');
+	}
 	
+	//Remove all items inside the cart
 	public function destroyCart() 
 	{
 		if (Session::has('Cart')) Session::forget('Cart');
 		return redirect()->route("cart");
 	}
+	//Cancel changing order's content
+	public function destroyOrderCart() 
+	{
+		if (Session::has('OrderCart')) Session::forget('OrderCart');
+		if (Session::has('OrderCartID')) Session::forget('OrderCartID');
+		return redirect()->route("order-history-by-id", ['id' => Auth::user()->id]);
+	}
 	
-	// //chau's; submit an order into the database
+	// chau's; submit an order into the database
+	//insert an order into the database
 	public function postOrder(Request $request)
 	{
 	 	$order = new Order();
@@ -262,6 +365,9 @@ class ProductController
 		$order->orderdate = $date;
 	 	$order->save();
 	 	$productList = Session::get('Cart');
+		if ($productList == NULL){
+			return redirect("../products.html");
+		}
 	 	foreach ($productList as $key => $value) 
 	 	{
 	 		$proorderProduct = new Ordercontent();
@@ -273,6 +379,88 @@ class ProductController
 			$proorderProduct->customizable = $value['customizable'];
 	 		$proorderProduct->save();
 		}
+		$method = $request->method;
+		
+//////// check method = paypal /////////
+		if ($method == "Paypal")
+		{
+			
+			$paypal = new PayPalSvc();
+			
+			//Create a array with some product within;
+			$data = array();
+			foreach ($productList as $value) 
+			{
+				$cost = (double)($value['price'] / 23000);
+					$ele = [
+						'name' => $value['name'],
+						'quantity' => $value['quantity'],
+						'price' => $cost,
+						'sku' => $value['id']
+					];
+					//echo $value['quantity'];
+					array_push($data, $ele);
+			}
+	
+			//description for transaction, miêu tả lại cái trans này dùng làm gì
+			$transactionDescription = "Paypal payment";
+	
+			//Khởi tạo các đường dẫn khả dụng, cũng như các hàm phương thức có thể
+			//được thực hiện
+			$paypalCheckoutUrl = $paypal
+									  // ->setCurrency('eur')
+									  ->setReturnUrl(url('paypal/status'))
+									  // ->setCancelUrl(url('paypal/status'))
+									  ->setItem($data)
+									  // ->setItem($data[0])
+									  // ->setItem($data[1])
+									  ->createPayment($transactionDescription);
+	
+			if ($paypalCheckoutUrl) {
+	
+				return redirect($paypalCheckoutUrl);
+			} else {
+				dd(['Error']);
+			}
+		}
+//////// end check method = Paypal /////////
+		else{
+			Session::forget('Cart');
+			return redirect()->route('products');
+		}
+	}
+
+	//update an order's content into the database
+		public function postOrderCart(Request $request)
+	{
+	 	$order = Order::where('id', Session::get('OrderCartID'))->first();
+		$myCart = Session::get('OrderCart');
+		$sum = 0;
+		foreach($myCart as $item)
+		{
+			$indivCost = $item['price'];
+			$sum += $item['quantity'] * $indivCost;
+		}
+	 	$order->price = $sum;
+
+	 	$order->save();
+	 	$productList = Session::get('OrderCart');
+		$deletedRows = Ordercontent::where('orderid', Session::get('OrderCartID'))->delete();
+	 	foreach ($productList as $key => $value) 
+	 	{
+	 		$proorderProduct = new Ordercontent();
+	 		$proorderProduct->orderid = $order->id;
+	 		$proorderProduct->productid = $value['id'];
+	 		$proorderProduct->quantity = $value['quantity'];
+	 		$proorderProduct->price = $value['price'];
+			$proorderProduct->size = $value['size'];
+			$proorderProduct->customizable = $value['customizable'];
+	 		$proorderProduct->save();
+		}
+		Session::forget('OrderCart');
+		Session::forget('OrderCartID');
+		
+		return redirect()->route('dashboard');
 	}
 
 
@@ -345,12 +533,15 @@ class ProductController
 // 		})->get();
 // 		return view('middleware.thanh.order', compact('orderDetail', 'orderContentwithImages'));
 // 	}
-
-	public function viewProductAdmin($id) {
+	
+	//////////////////////////////////////////////
+	//              MANAGE PRODUCT              //
+	//////////////////////////////////////////////
+	public function viewProductAdmin($id) 
+	{
 	 	$product = Product::where('id', $id)->first();
 	 	return view('admin.product-view', compact('product' ));
 	}
-	
 	public function createProduct(Request $request) 
 	{
 		$file = $request->imagetoupload;
@@ -367,12 +558,11 @@ class ProductController
 		$product->save();
 		return redirect('/product-list.html');
 	}
-
-	public function getProductAdmin($id) {
+	public function getProductAdmin($id) 
+	{
 	 	$product = Product::where('id', $id)->first();
 	 	return view('admin.product-edit', compact('product' ));
 	}
-
 	public function updateProduct(Request $request) 
 	{
 		$product = Product::where('id', $request->id)->first();
@@ -409,13 +599,16 @@ class ProductController
 		$product->delete();
 		return redirect('/product-list.html');
 	}
-	////////////////////////////////////
-	//   IN THE WRONG CONTROLLER ATM  //
-	////////////////////////////////////
-	public function getOrderAdmin($id) {
+	//////////////////////////////////////////////
+	//   IN THE WRONG CONTROLLER ATM but meh    //
+	//////////////////////////////////////////////
+	/* Get info of a specific order */
+	public function getOrderAdmin($id) 
+	{
 	 	$order = Order::where('id', $id)->first();
 	 	return view('admin.order-update', compact('order'));
 	}
+	/* Update the bill's content */
 	public function updateOrder(Request $request)
 	{
 		$order = Order::where('id', $request->id)->first();
@@ -427,6 +620,7 @@ class ProductController
 		$order->save();
 		return redirect()->route("order-history-by-id", ['id' => Auth::user()->id]);
 	}
+	/* Update the order's status */
 	public function updateOrderStatus(Request $request)
 	{
 		$order = Order::where('id', $request->id)->first();
@@ -434,24 +628,26 @@ class ProductController
 		$order->save();
 		return back();
 	}
+
+	//View all Orders
 	public function viewOrder($id) 
 	{
 		$orderdetail = Order::where('id', $id)->first();
 		$ordercontents = Ordercontent::where('orderid', $id)->get();
 		return view('admin.order-view', compact('orderdetail','ordercontents'));
 	}
+	//View Orders of a specific user
 	public function viewOrderHistoryByID($id) 
 	{
 		$orders = Order::where('userid', $id)->get();
 		return view('admin.order-history-by-id', compact('orders'));
 	}
-
+	//View Orders under a filter
 	public function viewOrderHistoryToday() 
 	{
 		$orders = Order::whereDay('updated_at', '=', date('d'))->whereMonth('updated_at', '=', date('m'))->whereYear('updated_at', '=', date('Y'))->where('status','delivered')->get();
 		return view('admin.order-history-by-id', compact('orders'));
 	}
-
 	public function viewOrderHistoryThisMonth() 
 	{
 		$orders = Order::whereMonth('updated_at', '=', date('m'))->whereYear('updated_at', '=', date('Y'))->where('status','delivered')->get();
@@ -462,14 +658,12 @@ class ProductController
 		$orders = Order::whereYear('updated_at', '=', date('Y'))->where('status','delivered')->get();
 		return view('admin.order-history-by-id', compact('orders'));
 	}
-
 	public function viewOrderHistoryByStatus($status) 
 	{
 		$orders = Order::where('status', $status)->get();
 		//dd($orders); 
 		return view('admin.order-history-by-id', compact('orders'));
 	}
-
 	public function viewOrderHistoryByDate($date) 
 	{
 		$tm =explode("-", $date);
@@ -509,7 +703,6 @@ class ProductController
 		}
 		return view('admin.order-history-by-id', compact('orders'));
 	}
- 
 	
  }
 
