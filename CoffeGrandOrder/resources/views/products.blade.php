@@ -30,7 +30,7 @@
         <div class="row tm-welcome-content">
           <h2 class="white-text tm-handwriting-font tm-welcome-header"><img src="img/header-line.png" alt="Line" class="tm-header-line">&nbsp;Our Menus&nbsp;&nbsp;<img src="img/header-line.png" alt="Line" class="tm-header-line"></h2>
           <h2 class="gold-text tm-welcome-header-2">Cafe House</h2>
-          <p class="gray-text tm-welcome-description">Cafe House template is a mobile-friendly responsive <span class="gold-text">Bootstrap v3.3.5 layout</span> by <span class="gold-text">templatemo</span>. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculusnec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
+          <p class="gray-text tm-welcome-description">The Loudest Noise Comes From The Electric Coffee.</p>
           <a href="#main" class="tm-more-button tm-more-button-welcome">Read More</a>      
         </div>
         <img src="img/table-set.png" alt="Table Set" class="tm-table-set img-responsive">  
@@ -42,7 +42,7 @@
           <div class="col-lg-9 col-md-9 col-sm-8">
             <h2 class="tm-section-header gold-text tm-handwriting-font">Variety of Menus</h2>
             <h2>Cafe House</h2>
-            <p class="tm-welcome-description">This is free HTML5 website template from <span class="blue-text">template</span><span class="green-text">mo</span>. Fndimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Ettiam sit amet orci eget eros faucibus tincidunt.</p>
+            <p class="tm-welcome-description">The excellent artisans of coffee.</p>
             <a href="#" class="tm-more-button margin-top-30">Read More</a> 
           </div>
           <div class="col-lg-3 col-md-3 col-sm-4 tm-welcome-img-container">
@@ -81,7 +81,7 @@
                 <img src="product-images/{{$product->image}}" alt="Product" height=200 width=200 >
                 <div class="tm-product-text">
                   <h3 class="tm-product-title" > <a href="product/{{$product->id}}.html">{{$product->name}}</a></h3>
-                  <p class="tm-product-description">{!!$product->description!!}</p>
+                  <p class="tm-product-description" style="max-width: 200px;">{!!$product->description!!}</p>
                 </div>
                 <div class="tm-product-price">
                   <a href="product/{{$product->id}}.html" class="tm-product-price-link tm-handwriting-font" style="line-height: 1;padding-top: 15px;"><span class="tm-product-price-currency"></span>{{$product->price}} <p class="tm-handwriting-font" style="

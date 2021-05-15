@@ -56,7 +56,7 @@
         <div class="row tm-welcome-content">
           <h2 class="white-text tm-handwriting-font tm-welcome-header"><img src="img/header-line.png" alt="Line" class="tm-header-line">&nbsp;Welcome To&nbsp;&nbsp;<img src="img/header-line.png" alt="Line" class="tm-header-line"></h2>
           <h2 class="gold-text tm-welcome-header-2">Cafe House</h2>
-          <p class="gray-text tm-welcome-description">Cafe House template is a mobile-friendly responsive <span class="gold-text">Bootstrap v3.3.5</span> layout by <span class="gold-text">templatemo</span>. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculusnec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
+          <h3 class="gray-text tm-welcome-description">Coffee only if you want the best.</h3>
           <a href="#main" class="tm-more-button tm-more-button-welcome">Details</a>      
         </div>
         <img src="img/table-set.png" alt="Table Set" class="tm-table-set img-responsive">             
@@ -68,7 +68,7 @@
           <div class="col-lg-9 col-md-9 col-sm-8">
             <h2 class="tm-section-header gold-text tm-handwriting-font">The Best Coffee for you</h2>
             <h2>Cafe House</h2>
-            <p class="tm-welcome-description">This is free HTML5 website template from <span class="blue-text">template</span><span class="green-text">mo</span>. Fndimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Ettiam sit amet orci eget eros faucibus tincidunt.</p>
+            <h3 >Go ahead! Take your Coffee!.</h3>
             <a href="#" class="tm-more-button margin-top-30">Read More</a> 
           </div>
           <div class="col-lg-3 col-md-3 col-sm-4 tm-welcome-img-container">
@@ -82,39 +82,61 @@
             <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="img/logo.png" alt="Logo" class="tm-site-logo"> Popular Items</h2>
             <div class="tm-hr-container"><hr class="tm-hr"></div>
           </div>
+
           <div class="col-lg-12 tm-popular-items-container">
-            <div class="tm-popular-item">
-              <img src="img/popular-1.jpg" alt="Popular" class="tm-popular-item-img">
+
+            <!-- <div class="tm-popular-item">
+              <img src="img/america.png" style="width: 286px; height: 286px;" alt="Popular" class="tm-popular-item-img">
               <div class="tm-popular-item-description">
-                <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">a</span>mericano</h3><hr class="tm-popular-item-hr">
-                <p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque. sed ipsum.</p>
+                <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">A</span>mericano</h3><hr class="tm-popular-item-hr">
+                <p>Là một phong cách cà phê chuẩn bị bằng cách thêm nước nóng vào espresso, điều này làm cà phê có độ đậm tương tự, nhưng hương vị lại khác, giống cà phê phin.</p>
                 <div class="order-now-container">
                   <a href="#" class="order-now-link tm-handwriting-font">Order Now</a>
                 </div>
               </div>              
             </div>
+
             <div class="tm-popular-item">
-              <img src="img/popular-2.jpg" alt="Popular" class="tm-popular-item-img">
+              <img src="img/capucino.png" style="width: 286px; height: 286px;" alt="Popular" class="tm-popular-item-img">
               <div class="tm-popular-item-description">
-                <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">c</span>appuccino</h3><hr class="tm-popular-item-hr">
-                <p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque. sed ipsum.</p>
+                <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">C</span>appuccino</h3><hr class="tm-popular-item-hr">
+                <p>Ở Ý, quốc gia mà đồ uống này phổ biến nhất, theo truyền thống, được thưởng thức vào buổi sáng, vào bữa sáng hoặc sau đó, không bao giờ trong bữa ăn.</p>
                 <div class="order-now-container">
                   <a href="#" class="order-now-link tm-handwriting-font">Order Now</a>
                 </div>
               </div>              
             </div>
+
             <div class="tm-popular-item">
-              <img src="img/popular-3.jpg" alt="Popular" class="tm-popular-item-img">
+              <img src="img/mocha.png" style="width: 286px; height: 286px;" alt="Popular" class="tm-popular-item-img">
               <div class="tm-popular-item-description">
-                <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">m</span>ocha</h3><hr class="tm-popular-item-hr">
-                <p>Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque. sed ipsum.</p>
+                <h3 class="tm-handwriting-font tm-popular-item-title"><span class="tm-handwriting-font bigger-first-letter">M</span>ocha</h3><hr class="tm-popular-item-hr">
+                <p>Giống với tách cà phê latte, cà phê mocha dựa trên espresso và sữa nóng nhưng có thêm hương vị sô cô la và chất làm ngọt, thường ở dạng bột ca cao và đường.</p>
                 <div class="order-now-container">
                   <a href="#" class="order-now-link tm-handwriting-font">Order Now</a>
                 </div>
               </div>              
+            </div> -->
+             @foreach($analize as $product)
+              
+            <div class="tm-popular-item">
+              <img src="product-images/{{$product->image}}" style="width: 286px; height: 286px;" alt="Popular" class="tm-popular-item-img">
+              <div class="tm-popular-item-description">
+                <h3 class="tm-handwriting-font tm-popular-item-title">{{$product->name}}</h3><hr class="tm-popular-item-hr">
+                <h4>Total order: {{$product->sum}}</h4>
+                <p>{!!$product->description!!}</p>
+                <div class="order-now-container">
+                  <a href="/product/{{$product->productid}}.html" class="order-now-link tm-handwriting-font">Order Now</a>
+                </div>
+              </div>              
             </div>
-          </div>          
+   
+              @endforeach   
+
+          </div>     
+             
         </section>
+
         <section class="tm-section row">
           <div class="col-lg-12 tm-section-header-container">
             <h2 class="tm-section-header gold-text tm-handwriting-font"><img src="img/logo.png" alt="Logo" class="tm-site-logo"> Today's Special</h2>
@@ -127,8 +149,8 @@
                   <img src="img/special-1.jpg" alt="Special" class="tm-special-img img-responsive">  
                   <a href="#">
                     <div class="tm-special-description">
-                      <h3 class="tm-special-title">Donec pede justo</h3>
-                      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>  
+                      <h3 class="tm-special-title">The royal taste.</h3>
+                      <p>Feel high!</p>  
                     </div>            
                   </a>
                 </div>
@@ -141,8 +163,8 @@
                     <img src="img/special-2.jpg" alt="Special" class="img-responsive">  
                     <a href="#">
                       <div class="tm-special-description">
-                        <h3 class="tm-special-title">Etiam sit amet</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                        <h3 class="tm-special-title">The Mugs of Paradise.</h3>
+                        <p>Your life should be hell.</p>
                       </div>
                     </a>
                   </div>
@@ -154,7 +176,7 @@
                     <img src="img/special-3.jpg" alt="Special" class="img-responsive">  
                     <a href="#">
                       <div class="tm-special-description">
-                        <p>Vivamus elementum</p>
+                        <p>Dark and Refined freshness</p>
                       </div>
                     </a>
                   </div>
@@ -164,7 +186,7 @@
                     <img src="img/special-4.jpg" alt="Special" class="img-responsive">  
                     <a href="#">
                       <div class="tm-special-description">
-                        <p>Quisque rutrum.</p>
+                        <p>Rice and Sip</p>
                       </div>
                     </a>
                   </div>
@@ -181,19 +203,19 @@
             </div>  
           </div>          
           <div class="row">
-            <div class="tm-daily-menu-container margin-top-60">
+            <div class="tm-daily-menu-container margin-top-60" style="width: 100%;">
               <div class="col-lg-4 col-md-4">
                 <img src="img/menu-board.png" alt="Menu board" class="tm-daily-menu-img">      
               </div>            
               <div class="col-lg-8 col-md-8">
-                <p>Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus.</p>
+                <p>Crazy about coffee, here is your asylum.</p>
                 <ol class="margin-top-30">
-                  <li>Tellus eget condimentum rhoncus.</li> 
-                  <li>Sem quam semper libero.</li>
-                  <li>Sit amet adipiscing sem neque sed ipsum.</li> 
-                  <li>Nam quam nunc, blandit vel, luctus pulvinar.</li> 
-                  <li>Maecenas nec odio et ante tincidunt tempus.</li> 
-                  <li>Donec vitae sapien ut libero ventenatis faucibus.</li> 
+                  <li>Americano</li> 
+                  <li>Cappuccino</li>
+                  <li>Mocha</li> 
+                  <li>Pure black coffee</li> 
+                  <li>Coco Choco</li> 
+                  <li>Onigiri</li> 
                 </ol>
                 <a href="#" class="tm-more-button margin-top-30">Read More</a>    
               </div>

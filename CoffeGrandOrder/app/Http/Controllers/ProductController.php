@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\DB;
 use App\Product;
 use App\Order;
 use App\Ordercontent;
 use App\Services\PaypalService as PayPalSvc;
 
-// use Mail;
+ use Mail;
 use Session;
 // use Twilio\Rest\Client;
 
@@ -47,6 +48,22 @@ class ProductController
 	//     });
 	// 	return redirect('contact.html');
 	// }
+	public function getProductsForHome() {
+			// $products = Product::select('name', 'description', 'image','id')->orderBy('created_at', 'desc')->take(3)->get();
+			// //dd($products);
+			// 
+			$analize = DB::table('ordercontents')
+			->select('productid', DB::raw('SUM(quantity)as sum'),'products.name','products.image','products.description')
+			->join('products', 'ordercontents.productid', '=', 'products.id')
+			->groupBy('ordercontents.productid','products.name','products.image','products.description')
+            ->orderBy('ordercontents.productid','asc') 
+            ->take(3)          
+            ->get();
+            return view('home', compact('analize'));	
+			// $analize = Ordercontent::selectRaw('productid, sum(quantity) as sum')->groupBy('productid')->orderBy('productid','desc')->get();
+			// dd($analize);
+
+	}
 	// //Show some latest products
 	public function getProducts(Request $request) {
 		if ( isset($request->type)){
@@ -351,7 +368,10 @@ class ProductController
 	 	$order->address = $request->address;
 		$order->deliverytype = $request->delivery;
 		$sum = 0;
-
+		$productList = Session::get('Cart');
+		if ($productList == NULL){
+			return redirect("../products.html");
+		}
 		$myCart = Session::get('Cart');
 		foreach($myCart as $item)
 		{
@@ -364,10 +384,33 @@ class ProductController
 
 		$order->orderdate = $date;
 	 	$order->save();
-	 	$productList = Session::get('Cart');
-		if ($productList == NULL){
-			return redirect("../products.html");
-		}
+
+		$orderStr = json_encode($productList, JSON_UNESCAPED_SLASHES);;
+		$orderStr = str_replace('"'," ",$orderStr);
+		$orderStr = str_replace('[{',"",$orderStr);
+		$orderStr = str_replace('}]',"",$orderStr);
+		$orderStr = str_replace('},{','</p></br><p>',$orderStr);
+		$data = array(
+	     'name'=>$request->name,
+	     'email'=>$request->email,
+	     'phone'=>$request->phone,
+	     'address'=>$request->address,
+	     'delivery'=>$request->delivery,
+	     'order'=>$orderStr,
+	    );
+
+		Mail::send('email.contact', $data, function($message){
+	      $message->to('chaunguyen999665@gmail.com', 'Admin')->subject("Test");
+	      $message->from('chaunguyen999665al@gmail.com', 'Agile_Project');
+	    });
+	     
+	    Mail::send('email.contactUser', $data, function($messageEx) use ($data){
+	      $messageEx->to($data['email'], 'User')->subject("Testuser");
+	      $messageEx->from('chaunguyen999665al@gmail.com', 'Agile_Project');
+	    });
+		
+	 	
+
 	 	foreach ($productList as $key => $value) 
 	 	{
 	 		$proorderProduct = new Ordercontent();
@@ -431,7 +474,7 @@ class ProductController
 	}
 
 	//update an order's content into the database
-		public function postOrderCart(Request $request)
+	public function postOrderCart(Request $request)
 	{
 	 	$order = Order::where('id', Session::get('OrderCartID'))->first();
 		$myCart = Session::get('OrderCart');
@@ -457,6 +500,8 @@ class ProductController
 			$proorderProduct->customizable = $value['customizable'];
 	 		$proorderProduct->save();
 		}
+
+
 		Session::forget('OrderCart');
 		Session::forget('OrderCartID');
 		

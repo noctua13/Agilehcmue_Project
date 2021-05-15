@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\registerController;
 use App\Http\Controllers\testController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SendMailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,12 +19,10 @@ use App\Http\Controllers\ProductController;
 //////////////////////////
 //  PUBLIC DIRECTORIES  //
 //////////////////////////
-Route::get('/', ["as" => "homepage", 'uses' => function () {
-	return view('home');
-}]);
-Route::get('/home', ["as" => "homepage", 'uses' => function () {
-	return view('home');
-}]);
+Route::get('/', ["as" => "homepage", 'uses' => 'App\Http\Controllers\ProductController@getProductsForHome']);
+// Route::get('/home.html', ["as" => "homepage", 'uses' => function () {
+// 	return view('home');
+// }]);
 
 Route::get('/contact.html', ["as" => "contact", 'uses' => function () {
 	return view('contact');
@@ -32,6 +31,7 @@ Route::get('/contact.html', ["as" => "contact", 'uses' => function () {
 Route::get('/today-special.html', ["as" => "today-special", 'uses' => function () {
 	return view('today-special');
 }]);
+Route::get('/home.html', ["as" => "homepage", 'uses' => 'App\Http\Controllers\ProductController@getProductsForHome']);
 
 Route::get('/products.html', ["as" => "products", 'uses' => 'App\Http\Controllers\ProductController@getProducts']);
 
@@ -174,7 +174,6 @@ Route::get('/paypal/thanh-toan', ["as" => "paypal-thanhtoan", 'uses' => 'App\Htt
 Route::get('/paypal/status', ["as" => "paypal-status", 'uses' => 'App\Http\Controllers\PaypalController@status'] );
 
 //
-
 /* DISCOUNT MANAGEMENT - to be implemented */
 
 //////////////////////////
