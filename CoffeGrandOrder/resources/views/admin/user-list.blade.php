@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layoutAdmin.main')
 @section('title', 'Coffee/Grand Order | Quản lý người dùng')
 
 @section('page-css')
@@ -11,7 +11,7 @@
         }
 
         .product-list {
-            width: 70%;
+            width: 90%;
             margin: 10px auto;
             border: solid 2px black;
             border-radius: 5px;
@@ -34,31 +34,24 @@
         .page-link {
             color: black;
         }
+        .table td, .table th {
+    padding: .75rem;
+    vertical-align: middle;
+    text-align : center;
+    border-top: 1px solid #dee2e6;
+}
     </style>
 @endsection
 
 @section('content')
-    <div class="tm-top-header">
-        <div class="container">
-            <div class="row">
-                <div class="tm-top-header-inner">
-                    <div class="tm-logo-container">
-                        <img src="img/logo.png" alt="Logo" class="tm-site-logo" />
-                        <h1 class="tm-site-name tm-handwriting-font">
-                            User Management
-                        </h1>
-                    </div>
-                    <div class="mobile-menu-icon">
-                        <i class="fa fa-bars"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div class="search-form">
+    <h1 class="tm-site-name tm-handwriting-font">
+                           User Management
+                        </h1>
         <form class="form-inline">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-            <button class="btn btn-outline-success btn-info my-2 my-sm-0" type="submit">
+            <button class="btn btn-success" type="submit">
                 Search...
             </button>
             <!-- Add product -->
@@ -106,19 +99,21 @@
 					
 					</td>
                     <td>
+                    <div class="row">
                         <!-- Promote/Demote -->
 						@if ($user->permission == 0)
 						<form action="user/promote/{{$user->id}}" method="get" >
-							<button type="submit">Promote</button>
+							<button class="btn btn-warning" type="submit">Promote</button>
 						</form>
 						@else
 						<form action="user/demote/{{$user->id}}" method="get" >
-							<button type="submit">Demote</button>
+							<button class="btn btn-warning" type="submit">Demote</button>
 						</form>
 						@endif
 						<!-- View information and order history -->
-						<a href="user/{{$user->id}}.html"><button>User Info</button></a>
-						<a href="order-history/{{$user->id}}.html"><button>Orders</button></a>
+						<a href="user/{{$user->id}}.html"><button class="btn btn-primary">User Info</button></a>
+						<a href="order-history/{{$user->id}}.html"><button class="btn btn-success">Orders</button></a>
+                    </div>
                     </td>
                 </tr>
 				@endforeach

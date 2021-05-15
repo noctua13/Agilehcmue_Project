@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layoutAdmin.main')
 @section('title', 'Coffee/Grand Order | Quản lý đơn hàng')
 
 @section('page-css')
@@ -34,33 +34,25 @@
         .page-link {
             color: black;
         }
+        .table td, .table th {
+    padding: .75rem;
+    vertical-align: middle;
+    border-top: 1px solid #dee2e6;
+}
     </style>
 @endsection
 
 @section('content')
-    <div class="tm-top-header">
-        <div class="container">
-            <div class="row">
-                <div class="tm-top-header-inner">
-                    <div class="tm-logo-container">
-                        <img src="img/logo.png" alt="Logo" class="tm-site-logo" />
-                        <h1 class="tm-site-name tm-handwriting-font">
-                            Order Management
-                        </h1>
-                    </div>
-                    <div class="mobile-menu-icon">
-                        <i class="fa fa-bars"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div class="search-form">
         <div class="row">
             <div class="col-sm-3">
+            <h1 class="tm-site-name tm-handwriting-font">
+                            Order Management
+                        </h1>
                 <form class="form-inline">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-success btn-info my-2 my-sm-0" type="submit">
+                    <button class="btn btn-success" type="submit">
                         Search...
                     </button>
                     <!-- Add product -->
