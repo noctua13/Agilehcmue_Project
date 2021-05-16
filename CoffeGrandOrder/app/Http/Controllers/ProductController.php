@@ -64,6 +64,90 @@ class ProductController
 			// dd($analize);
 
 	}
+	public function analize() {
+			// $products = Product::select('name', 'description', 'image','id')->orderBy('created_at', 'desc')->take(3)->get();
+			// //dd($products);
+			// 
+			$analize = DB::table('ordercontents')
+				->select('productid', DB::raw('SUM(quantity)as sum'),'products.name','products.image','products.description')
+				->join('products', 'ordercontents.productid', '=', 'products.id')
+				->join('orders', 'ordercontents.orderid', '=', 'orders.id')
+				->where('orders.status','delivered')
+				->groupBy('ordercontents.productid','products.name','products.image','products.description')
+	            ->orderBy('ordercontents.productid','asc')          
+	            ->get();
+
+			$analizeToday = DB::table('ordercontents')
+				->select('productid', DB::raw('SUM(quantity)as sum'),'products.name','products.image','products.description')
+				->join('products', 'ordercontents.productid', '=', 'products.id')
+				->join('orders', 'ordercontents.orderid', '=', 'orders.id')
+				->where('orders.status','delivered')
+				->whereDay('orders.updated_at', '=', date('d'))->whereMonth('orders.updated_at', '=', date('m'))->whereYear('orders.updated_at', '=', date('Y'))
+				->groupBy('ordercontents.productid','products.name','products.image','products.description')
+	            ->orderBy('ordercontents.productid','asc')          
+	            ->get();
+
+            $analizeThisMonth = DB::table('ordercontents')
+				->select('productid', DB::raw('SUM(quantity)as sum'),'products.name','products.image','products.description')
+				->join('products', 'ordercontents.productid', '=', 'products.id')
+				->join('orders', 'ordercontents.orderid', '=', 'orders.id')
+				->where('orders.status','delivered')
+				->whereMonth('orders.updated_at', '=', date('m'))->whereYear('orders.updated_at', '=', date('Y'))
+				->groupBy('ordercontents.productid','products.name','products.image','products.description')
+	            ->orderBy('ordercontents.productid','asc')          
+	            ->get();
+
+            $analizeThisYear = DB::table('ordercontents')
+				->select('productid', DB::raw('SUM(quantity)as sum'),'products.name','products.image','products.description')
+				->join('products', 'ordercontents.productid', '=', 'products.id')
+				->join('orders', 'ordercontents.orderid', '=', 'orders.id')
+				->where('orders.status','delivered')
+				->whereYear('orders.updated_at', '=', date('Y'))
+				->groupBy('ordercontents.productid','products.name','products.image','products.description')
+	            ->orderBy('ordercontents.productid','asc')          
+	            ->get();
+	        $billMonthPerYear = DB::select("SELECT MONTH(updated_at) as time, COUNT(updated_at) as bill 
+				from orders 
+				WHERE YEAR(updated_at) = YEAR(CURRENT_DATE()) 
+				GROUP BY time");
+            $billWeekPerMonth = DB::select("SELECT b.week as week, IFNULL(a.bill, 0) as bill
+				FROM (SELECT WEEK(updated_at) as week, COUNT(updated_at) as bill from orders WHERE MONTH(updated_at) = MONTH(CURRENT_DATE()) AND YEAR(updated_at) = YEAR(CURRENT_DATE()) GROUP BY WEEK(updated_at)) AS a
+				RIGHT JOIN
+				(SELECT WEEK(week_field) as week FROM ( SELECT MAKEDATE(YEAR(NOW()),1) + INTERVAL (MONTH(NOW())-1) MONTH + INTERVAL weeknum WEEK week_field FROM ( SELECT t*10+u weeknum FROM (SELECT 0 t UNION SELECT 1 UNION SELECT 2 UNION SELECT 3) A, (SELECT 0 u UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) B ORDER BY weeknum ) AA ) AAA WHERE MONTH(week_field) = MONTH(NOW())) AS b
+				ON a.week = b.week");
+            $billDayPerWeek = DB::select("SELECT b.time as time, IFNULL(a.bill, 0) as bill
+				FROM 
+				(SELECT DAY(updated_at) as time, COUNT(updated_at) as bill 
+				from orders
+				WHERE MONTH(updated_at) = MONTH(CURRENT_DATE()) AND YEAR(updated_at) = YEAR(CURRENT_DATE()) AND WEEK(updated_at) = WEEK(CURRENT_DATE())
+				GROUP BY DAY(updated_at)) AS a
+				RIGHT JOIN
+				(SELECT DAY(date_field) as time
+				FROM
+				(
+				    SELECT
+				        MAKEDATE(YEAR(NOW()),1) +
+				        INTERVAL (MONTH(NOW())-1) MONTH +
+				        INTERVAL daynum DAY date_field
+				    FROM
+				    (
+				        SELECT t*10+u daynum
+				        FROM
+				            (SELECT 0 t UNION SELECT 1 UNION SELECT 2 UNION SELECT 3) A,
+				            (SELECT 0 u UNION SELECT 1 UNION SELECT 2 UNION SELECT 3
+				            UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7
+				            UNION SELECT 8 UNION SELECT 9) B
+				        ORDER BY daynum
+				    ) AA
+				) AAA
+				WHERE MONTH(date_field) = MONTH(NOW()) AND WEEK(date_field) = WEEK(NOW())) AS b
+				ON a.time = b.time
+				ORDER BY time");
+            return view('admin.analytics', compact('analize','analizeToday','analizeThisMonth','analizeThisYear','billMonthPerYear','billWeekPerMonth',"billDayPerWeek"));	
+			// $analize = Ordercontent::selectRaw('productid, sum(quantity) as sum')->groupBy('productid')->orderBy('productid','desc')->get();
+			// dd($analize);
+
+	}
 	// //Show some latest products
 	public function getProducts(Request $request) {
 		if ( isset($request->type)){
@@ -408,6 +492,8 @@ class ProductController
 	      $messageEx->to($data['email'], 'User')->subject("Testuser");
 	      $messageEx->from('chaunguyen999665al@gmail.com', 'Agile_Project');
 	    });
+		$method = $request->method;
+		//dd($productList);
 		
 	 	
 
@@ -422,8 +508,8 @@ class ProductController
 			$proorderProduct->customizable = $value['customizable'];
 	 		$proorderProduct->save();
 		}
-		$method = $request->method;
-		
+
+
 //////// check method = paypal /////////
 		if ($method == "Paypal")
 		{

@@ -231,4 +231,5 @@
    <script type="text/javascript" src="./js/templatemo-script.js"></script> 
    <link href="{{ asset('js/templatemo-script.js') }}" rel="script">
   <link href="{{ asset('js/jquery-1.11.2.min.js') }}" rel="script">
+  
 @endsection

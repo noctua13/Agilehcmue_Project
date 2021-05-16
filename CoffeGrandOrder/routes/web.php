@@ -69,10 +69,10 @@ Route::post('/signup/store', ["as" => "user-store", 'uses' => 'App\Http\Controll
 Route::get('/checkout.html', ["as" => "checkout", 'uses' => function () {
 	return view('checkout');
 }]);
-Route::post('/checkout/create', ["as" => "checkout-create", 'uses' =>  function (){
-	return view('home');
-}]);
-
+// Route::post('/checkout/create', ["as" => "checkout-create", 'uses' =>  function (){
+// 	return view('home');
+// }]);
+Route::post('/checkout/create', ["as" => "checkout-create", 'uses' => 'App\Http\Controllers\ProductController@postOrder']);
 ///////////////////////////
 // REGISTERED USERS ONLY //
 ///////////////////////////
@@ -177,7 +177,8 @@ Route::get('/order-content-loader/{id}.html', ["as" => "order-content-loader", '
 Route::get('/order-content-update/{id}.html', ["as" => "product-content-update-ui", 'uses' => function () {
 	return view('admin.order-content-update');
 }]);
-
+//Analize
+Route::get('/analize.html', ["as" => "Analize", 'uses' => 'App\Http\Controllers\ProductController@analize']);
 ////////////////////////////
 //Order Content CRUD
 Route::get('/ordercart/insert', ["as" => "ordercart-insert", 'uses' => 'App\Http\Controllers\ProductController@insertOrderCart']);

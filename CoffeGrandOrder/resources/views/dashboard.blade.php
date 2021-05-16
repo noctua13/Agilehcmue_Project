@@ -6,6 +6,11 @@
   <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
   <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <style type="text/css">
+    .textlg{
+      padding: 10px;
+    }
+  </style>
 @endsection
 
 @section('meta-og-system')
@@ -36,15 +41,17 @@ $address = Auth::user()->address;
       <img alt="User Pic" style="width:50%; height: 50%" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive">
     </div>
                       
-<div class="col-sm-9 r-layout-user" >
+<div class="col-sm-12 r-layout-user" >
         <div>
         
 
-            <span class="text-lg text-bold pull-right"><a class="btn btn-info" href="/order-history/{{Auth::user()->id}}.html"><i class="fa fa-eye"></i> View Order History</a><a class="btn btn-danger" href="{{route('logout')}}">Log out</a></span>
+            <span class="text-lg text-bold pull-right" style="padding: 10px"><a class="btn btn-info" href="/order-history/{{Auth::user()->id}}.html"><i class="fa fa-eye"></i> View Order History</a></span>
+               <span class="text-lg text-bold pull-right" style="padding: 10px"><a class="btn btn-danger" href="{{route('logout')}}">Log out</a></span>
 			@if (Auth::user()->permission == 1)
-			<span class="text-lg text-bold pull-right"><a class="btn btn-success" href="/product-list.html"><i class="fa fa-eye"></i> Product Management</a></span>
-			<span class="text-lg text-bold pull-right"><a class="btn btn-primary" href="/order-history.html"><i class="fa fa-eye"></i> Order Management</a></span>		
-			<span class="text-lg text-bold pull-right"><a class="btn btn-danger" href="/user-list.html"><i class="fa fa-eye"></i> User Management</a></span>
+			<span class="text-lg text-bold pull-right" style="padding: 10px"><a class="btn btn-success" href="/product-list.html"><i class="fa fa-eye"></i> Product Management</a></span>
+      <span class="text-lg text-bold pull-right" style="padding: 10px"><a class="btn btn-success" href="/analize.html"><i class="fa fa-eye"></i> Analize</a></span>
+			<span class="text-lg text-bold pull-right" style="padding: 10px"><a class="btn btn-primary" href="/order-history.html"><i class="fa fa-eye"></i> Order Management</a></span>		
+			<span class="text-lg text-bold pull-right" style="padding: 10px"><a class="btn btn-danger" href="/user-list.html"><i class="fa fa-eye"></i> User Management</a></span>
 			@endif
         </div>
         <div>

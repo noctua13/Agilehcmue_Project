@@ -7,8 +7,8 @@
 window.onscroll = function() {stickyFunction()};
 
 var header = document.getElementById("CGOHeader");
-var sticky = header.offsetTop;
-
+// var sticky = header.offsetTop;
+var sticky = 20;
 function stickyFunction() {
   if (window.pageYOffset > sticky) {
     header.classList.add("sticky");
