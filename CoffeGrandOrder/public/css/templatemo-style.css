@@ -148,8 +148,9 @@ COLOR CODES
             transition: all 0.3s 1s ease-out;
 }
 /* end Preloader */
-
-body { overflow-x: hidden; }
+/*
+body { overflow: hidden; }
+*/
 ul { 
   margin: 0; 
   padding: 0;
@@ -528,6 +529,7 @@ ol li:before {
   height: 41px;
 }
 .tm-hr { border-color: #c79c60; }
+
 .tm-daily-menu-container { overflow: hidden; }
 
 /* Menu */
@@ -681,7 +683,7 @@ button.tm-more-button {
   #google-map { margin-top: 50px; }
 }
 .sticky {
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100%;
   z-index: 100000;

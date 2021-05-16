@@ -71,9 +71,12 @@ Route::get('/checkout.html', ["as" => "checkout", 'uses' => function () {
 }]);
 Route::post('/checkout/create', ["as" => "checkout-create", 'uses' => 'App\Http\Controllers\ProductController@postOrder']);
 
-///////////////////////////
-// REGISTERED USERS ONLY //
-///////////////////////////
+/////////////////////////////////////
+//      REGISTERED USERS ONLY      //
+//     since this route onward     //
+/////////////////////////////////////
+Route::middleware('auth')->group(function() {
+
 Route::get('/dashboard.html', ["as" => "dashboard", 'uses' => function () {
 	return view('dashboard');
 }])->middleware('auth');
@@ -167,14 +170,24 @@ Route::get('/ordercart/delete', ["as" => "ordercart-delete", 'uses' => 'App\Http
 Route::get('/ordercart/destroy', ["as" => "ordercart-destroy", 'uses' => 'App\Http\Controllers\ProductController@destroyOrderCart']);
 Route::get('/ordercart/submit', ["as" => "ordercart-submit", 'uses' => 'App\Http\Controllers\ProductController@postOrderCart']);
 
+/* DISCOUNT MANAGEMENT - to be implemented */
+
+});
+/////////////////////////////////////
+//  end of REGISTERED USERS ONLY   //
+//     since this route upward     //
+/////////////////////////////////////
+
+
 ///////////////////////////
 //PAYPAL
 
 Route::get('/paypal/thanh-toan', ["as" => "paypal-thanhtoan", 'uses' => 'App\Http\Controllers\PaypalController@thanhToan']);
 Route::get('/paypal/status', ["as" => "paypal-status", 'uses' => 'App\Http\Controllers\PaypalController@status'] );
 
-//
-/* DISCOUNT MANAGEMENT - to be implemented */
+//////////////////////////
+//TWILIO
+
 
 //////////////////////////
 //    MISCELLANEOUS     //
