@@ -69,13 +69,14 @@ Route::post('/signup/store', ["as" => "user-store", 'uses' => 'App\Http\Controll
 Route::get('/checkout.html', ["as" => "checkout", 'uses' => function () {
 	return view('checkout');
 }]);
-// Route::post('/checkout/create', ["as" => "checkout-create", 'uses' =>  function (){
-// 	return view('home');
-// }]);
 Route::post('/checkout/create', ["as" => "checkout-create", 'uses' => 'App\Http\Controllers\ProductController@postOrder']);
-///////////////////////////
-// REGISTERED USERS ONLY //
-///////////////////////////
+
+/////////////////////////////////////
+//      REGISTERED USERS ONLY      //
+//     since this route onward     //
+/////////////////////////////////////
+Route::middleware('auth')->group(function() {
+
 Route::get('/dashboard.html', ["as" => "dashboard", 'uses' => function () {
 	return view('dashboard');
 }])->middleware('auth');
@@ -87,12 +88,7 @@ Route::get('/dashboard.html', ["as" => "dashboard", 'uses' => function () {
 /* PRODUCT MANAGEMENT */
 
 Route::get('/product-list.html', ["as" => "product-list", 'uses' => function () {
-	if (Auth::user()->permission == 1){
 	return view('admin/product-list');
-	}
-	else {
-		return view('home');
-	}
 }]);
 
 Route::get('/product-view/{id}.html', ["as" => "product-view", 'uses' => 'App\Http\Controllers\ProductController@viewProductAdmin']);
@@ -110,13 +106,7 @@ Route::get('/product/delete', ["as" => "product-delete", 'uses' => 'App\Http\Con
 /* USER MANAGEMENT */
 
 Route::get('/user-list.html', ["as" => "user-list", 'uses' => function () {
-	if (Auth::user()->permission == 1){
-		return view('admin/user-list');
-		}
-		else {
-			return view('home');
-		}
-	
+	return view('admin/user-list');
 }]);
 
 Route::get('/user/{id}.html', ["as" => "user-view", 'uses' => 'App\Http\Controllers\UserController@view']);
@@ -129,13 +119,7 @@ Route::get('/user/demote/{id}', ["as" => "product-demote", 'uses' => 'App\Http\C
 //////////////////////////////////
 // View all orders
 Route::get('/order-history.html', ["as" => "order-history", 'uses' => function () {
-	if (Auth::user()->permission == 1){
-		return view('admin/order-history');
-		}
-		else {
-			return view('home');
-		}
-	
+	return view('admin/order-history');
 }]);
 
 /////////////////////////////////
@@ -177,8 +161,7 @@ Route::get('/order-content-loader/{id}.html', ["as" => "order-content-loader", '
 Route::get('/order-content-update/{id}.html', ["as" => "product-content-update-ui", 'uses' => function () {
 	return view('admin.order-content-update');
 }]);
-//Analize
-Route::get('/analize.html', ["as" => "Analize", 'uses' => 'App\Http\Controllers\ProductController@analize']);
+
 ////////////////////////////
 //Order Content CRUD
 Route::get('/ordercart/insert', ["as" => "ordercart-insert", 'uses' => 'App\Http\Controllers\ProductController@insertOrderCart']);
@@ -187,14 +170,24 @@ Route::get('/ordercart/delete', ["as" => "ordercart-delete", 'uses' => 'App\Http
 Route::get('/ordercart/destroy', ["as" => "ordercart-destroy", 'uses' => 'App\Http\Controllers\ProductController@destroyOrderCart']);
 Route::get('/ordercart/submit', ["as" => "ordercart-submit", 'uses' => 'App\Http\Controllers\ProductController@postOrderCart']);
 
+/* DISCOUNT MANAGEMENT - to be implemented */
+
+});
+/////////////////////////////////////
+//  end of REGISTERED USERS ONLY   //
+//     since this route upward     //
+/////////////////////////////////////
+
+
 ///////////////////////////
 //PAYPAL
 
 Route::get('/paypal/thanh-toan', ["as" => "paypal-thanhtoan", 'uses' => 'App\Http\Controllers\PaypalController@thanhToan']);
 Route::get('/paypal/status', ["as" => "paypal-status", 'uses' => 'App\Http\Controllers\PaypalController@status'] );
 
-//
-/* DISCOUNT MANAGEMENT - to be implemented */
+//////////////////////////
+//TWILIO
+
 
 //////////////////////////
 //    MISCELLANEOUS     //

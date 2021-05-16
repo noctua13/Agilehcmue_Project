@@ -18,15 +18,24 @@
             </div>
             <nav class="tm-nav">
               <ul>
-              
-
-    <li><a href="{{route('product-list')}}" >Product</a></li>
-                <li><a href="{{route('user-list')}}">User</a></li>
-                <li><a href="order-history.html">Order</a></li>
-                <li><a href="{{route('homepage')}}" >Back to Home</a></li>
+				<li><a href="{{route('homepage')}}" >Home</a></li>
+				<li><a href="{{route('product-list')}}" >Products</a></li>
+                <li><a href="{{route('user-list')}}">Users</a></li>
+                <li><a href="order-history.html">Orders</a></li>
+                <li><a href="{{route('cart')}}">Cart (
+				@if (Session::has('Cart'))
+				{{count(Session::get('Cart'))}}
+				@else
+					0
+				@endif
+				)
+				</a></li>
+				@if (Session::has('OrderCart'))
+				<li><a href="/order-content-update/{{Session::get('OrderCartID')}}.html">Order Change ( {{count(Session::get('OrderCart'))}} )</a></li>
+				@endif
                 
                 
-                <li><a href="{{route('homepage')}}" >Hello, Sir</a></li>
+                <li><a href="{{route('dashboard')}}" >Hello, {{Auth::user()->name}}.</a></li>
               </ul>
             </nav>   
           </div>           
