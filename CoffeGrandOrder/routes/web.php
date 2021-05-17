@@ -186,7 +186,7 @@ Route::get('/paypal/thanh-toan', ["as" => "paypal-thanhtoan", 'uses' => 'App\Htt
 Route::get('/paypal/status', ["as" => "paypal-status", 'uses' => 'App\Http\Controllers\PaypalController@status'] );
 
 //Analize
-Route::get('/analize.html', ["as" => "Analize", 'uses' => 'App\Http\Controllers\ProductController@analize']);
+Route::get('/analize.html', ["as" => "analize", 'uses' => 'App\Http\Controllers\ProductController@analize']);
 //////////////////////////
 //TWILIO
 

@@ -108,7 +108,7 @@
             </thead>
             <tbody>
                 @php
-					$orders = App\Order::get();
+					$orders = App\Order::orderBy('id','desc')->get();
 				@endphp
 				@foreach($orders as $order)
 				<tr>

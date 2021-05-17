@@ -43,40 +43,42 @@
     </style>
 @endsection
 
-@section('content')    
-    <h1>Drink</h1>
+@section('content')  
+<div class="container">  
+    <h1 class="tm-handwriting-font">Drink</h1>
     <div class="row">
         <div class="col-6">
-            <h1>All</h1>
+            <h1 class="tm-handwriting-font">All</h1>
             <canvas id="myChart" width="400" height="150"></canvas>
         </div>
         <div class="col-6">
-            <h1>Per day</h1>
+            <h1 class="tm-handwriting-font">Per day</h1>
             <canvas id="myChartToday" width="400" height="150"></canvas>
         </div> 
         <div class="col-6">
-            <h1>Per Month</h1>
+            <h1 class="tm-handwriting-font">Per Month</h1>
             <canvas id="myChartThisMonth" width="400" height="150"></canvas>
         </div>
         <div class="col-6">
-            <h1>Per year</h1>
+            <h1 class="tm-handwriting-font">Per year</h1>
             <canvas id="myChartThisYear" width="400" height="150"></canvas>
         </div>
     </div>
-    <h1>Bill</h1>
+    <h1 class="tm-handwriting-font">Bill</h1>
     <div class="row">
         <div class="col-6">
-            <h1>Month Per Year</h1>
+            <h1 class="tm-handwriting-font">Month Per Year</h1>
             <canvas id="myChartMonthPerYear" width="400" height="150"></canvas>
         </div>
         <div class="col-6">
-            <h1>Week Per Month</h1>
+            <h1 class="tm-handwriting-font">Week Per Month</h1>
             <canvas id="myChartBillWeekPerMonth" width="400" height="150"></canvas>
         </div> 
         <div class="col-6">
-            <h1>Day Per Week</h1>
+            <h1 class="tm-handwriting-font">Day Per Week</h1>
             <canvas id="myChartBillDayPerWeek" width="400" height="150"></canvas>
         </div>
+    </div>
     </div>
 @endsection
 @section('page-js')

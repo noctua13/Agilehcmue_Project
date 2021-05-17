@@ -30,6 +30,7 @@
 				@endif
 				)
 				</a></li>
+        <li><a href="{{route('analize')}}">Analize</a></li>
 				@if (Session::has('OrderCart'))
 				<li><a href="/order-content-update/{{Session::get('OrderCartID')}}.html">Order Change ( {{count(Session::get('OrderCart'))}} )</a></li>
 				@endif
