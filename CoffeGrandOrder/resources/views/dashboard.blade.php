@@ -32,7 +32,7 @@ $address = Auth::user()->address;
       <img alt="User Pic" style="width:50%; height: 50%" src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg" id="profile-image1" class="img-circle img-responsive">
     </div>
                       
-<div class="col-sm-9 r-layout-user" >
+<div class="col-sm-12 r-layout-user" >
         <div>
         
 
@@ -47,6 +47,7 @@ $address = Auth::user()->address;
 				<a class="btn btn-success" href="/product-list.html"><i class="fa fa-eye"></i> Product Management</a></span>
 				<a class="btn btn-primary" href="/order-history.html"><i class="fa fa-eye"></i> Order Management</a>
 				<a class="btn btn-danger" href="/user-list.html"><i class="fa fa-eye"></i> User Management</a>
+        <a class="btn btn-danger" href="/analize.html"><i class="fa fa-eye"></i> Analize</a>
 			</span>
 			<br />
 			@endif

@@ -4,8 +4,8 @@
       <div class="loader-section section-left"></div>
       <div class="loader-section section-right"></div>
     </div>
-    <!-- End Preloader -->
-    <div class="tm-top-header" id="CGOHeader">
+    <!-- End Preloader id="CGOHeader"-->
+    <div class="tm-top-header" >
       <div class="container">
         <div class="row">
           <div class="tm-top-header-inner">

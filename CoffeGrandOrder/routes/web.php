@@ -185,6 +185,8 @@ Route::get('/ordercart/submit', ["as" => "ordercart-submit", 'uses' => 'App\Http
 Route::get('/paypal/thanh-toan', ["as" => "paypal-thanhtoan", 'uses' => 'App\Http\Controllers\PaypalController@thanhToan']);
 Route::get('/paypal/status', ["as" => "paypal-status", 'uses' => 'App\Http\Controllers\PaypalController@status'] );
 
+//Analize
+Route::get('/analize.html', ["as" => "Analize", 'uses' => 'App\Http\Controllers\ProductController@analize']);
 //////////////////////////
 //TWILIO
 
